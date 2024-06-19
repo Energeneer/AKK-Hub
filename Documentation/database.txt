@@ -1,0 +1,169 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+// Individual users
+Table Users {
+  Id uuid [primary key]
+  Username varchar(255) [not null, unique]
+  Password varchar(255) [not null]
+  OAuthToken nvarchar(255)
+  WebAuthToken nvarchar(255)
+  Title nvarchar(255)
+  FirstName nvarchar(255)
+  MiddleNames nvarchar(255)
+  LastName nvarchar(255)
+  Initials nvarchar(16)
+  Nickname nvarchar(255)
+  Birthdate timestamp
+  TelefoneMain varchar(20)
+  TelefoneMobile varchar(20)
+  TelefoneJob varchar(20)
+  TelefoneSec varchar(20)
+  Fax varchar(20)
+  EmailAkk varchar(255)
+  EmailPriv varchar(255)
+  PublicImage image
+  InternalImage image
+  Notes text
+  LastChange datetime
+}
+
+// Used to assign permissions
+Table Roles {
+  Id uuid [primary key]
+  Name nvarchar(32)
+  Description text
+}
+
+// Give Users Roles
+Table UserRoles{
+  User uuid [ref: > Users.Id]
+  Role uuid [ref: > Roles.Id]
+}
+
+// Group Users into groups
+Table Groups {
+  Id uuid [primary key]
+  Name nvarchar(32)
+  Description text
+}
+
+// Assign Users to groups
+Table UserGroups{
+  User uuid [ref: > Users.Id]
+  Group uuid [ref: > Groups.Id]
+}
+
+// Address data
+Table Addresses {
+  Id uint [primary key]
+  StreetName nvarchar(255)
+  HouseNumber varchar(8)
+  AddressLine2 nvarchar(255)
+  ZipCode varchar(8)
+  City nvarchar(255)
+  Country varchar(255)
+  Telephone varchar(20)
+  Email varchar(255)
+  LastChange datetime
+}
+
+// Assign Addresses to Users
+Table UserAddresses {
+  User uuid [ref: > Users.Id]
+  Address uuid [ref: > Addresses.Id]
+}
+
+// Allow representation of external websites
+Table LinkedSites {
+  Id uuid [primary key]
+  Name varchar(16)
+  Category tinyint
+  Link varchar(255)
+  Icon image
+  LastChange datetime
+}
+
+// Assign Users to External Sites
+Table UserLinkedSites {
+ User uuid [ref: > Users.Id]
+ Site uuid [ref: > LinkedSites.Id]
+}
+
+Table Buildings {
+  Id uuid [primary key]
+  Address uint [ref: > Addresses.Id]
+  Name nvarchar(255)
+  Nickname nvarchar(255)
+}
+
+// Available Rooms
+Table Rooms {
+  Id uuid [primary key]
+  Name nvarchar(255)
+  Description text
+  RoomNumber varchar(255)
+  CanBeBooked bool
+  SizeSqm mediumint 
+  CapacityPpl mediumint
+}
+
+// What influence the use of one room has on another
+Table RoomInfluence {
+  OccupiedRoom uuid [ref: > Rooms.Id]
+  AffectedRoom uuid [ref: > Rooms.Id]
+  AffectsSound bool
+  AffectsSmell bool
+  AffectsOccupation bool
+}
+
+// Commonly used locations e.g. Cupboards, Closets, Safes, etc.
+Table Locations {
+  Id uuid [primary key]
+  Name nvarchar(64)
+  Room uuid [ref: > Rooms.Id]
+  Description text
+}
+
+// Type of keys that exist
+Table KeyTypes {
+  Id uuid [primary key]
+  Name nvarchar (64)
+  Description text
+  HangerNumber smallint
+  LastChange datetime
+}
+
+// Individual keys
+Table Keys {
+  Id uuid [primary key]
+  Type uuid [ref: > KeyTypes.Id]
+  Number smallint [unique]
+  CurrentOwner uuid [ref: > Users.Id]
+  CurrentLocation uuid [ref: > Locations.Id]
+  DateReceived datetime
+  DateReturned datetime
+  LastChange datetime
+}
+
+// Type of Inventory Items
+Table InventoryItemType {
+  Id uuid [primary key]
+  Name nvarchar (64)
+  Description text
+  Category varchar(64)
+  LastChange datetime
+}
+
+// Individual Inventory Items
+Table InventoryItem {
+  ID uuid 
+  Type uuid [ref: > InventoryItemType.Id]
+  Number int [unique]
+  Location uuid [ref: > Locations.Id]
+  LastChange datetime
+}
+
+Table Events {
+  Id uuid [primary key]
+}

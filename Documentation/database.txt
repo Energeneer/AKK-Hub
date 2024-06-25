@@ -1,3 +1,5 @@
+// https://dbdiagram.io/d/AKK-Database-Design-6670a299a179551be6187c35
+
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
@@ -15,13 +17,6 @@ Table Users {
   Initials nvarchar(16)
   Nickname nvarchar(255)
   Birthdate timestamp
-  TelefoneMain varchar(20)
-  TelefoneMobile varchar(20)
-  TelefoneJob varchar(20)
-  TelefoneSec varchar(20)
-  Fax varchar(20)
-  EmailAkk varchar(255)
-  EmailPriv varchar(255)
   PublicImage image
   InternalImage image
   Notes text
@@ -74,6 +69,29 @@ Table UserAddresses {
   Address uuid [ref: > Addresses.Id]
 }
 
+Table Emails {
+  Id uuid [primary key]
+  Address varchar [not null]
+  Label nvarchar [not null]
+}
+
+Table UserEmails {
+  User uuid [ref: > Users.Id]
+  Email uuid [ref: > Emails.Id]
+}
+
+Table TelefoneNumbers {
+  Id uint [primary key]
+  Number varchar [not null]
+  Label nvarchar [not null]
+  Type uint // Mobile, Landline, Fax, ...
+}
+
+Table UserTelNumbers {
+  User uuid [ref: > Users.Id]
+  TelNumber uuid [ref: > TelefoneNumbers.Id]
+}
+
 // Allow representation of external websites
 Table LinkedSites {
   Id uuid [primary key]
@@ -100,6 +118,7 @@ Table Buildings {
 // Available Rooms
 Table Rooms {
   Id uuid [primary key]
+  Building uuid [ref: > Buildings.Id]
   Name nvarchar(255)
   Description text
   RoomNumber varchar(255)
@@ -128,6 +147,7 @@ Table Locations {
 // Type of keys that exist
 Table KeyTypes {
   Id uuid [primary key]
+  Number varchar [not null]
   Name nvarchar (64)
   Description text
   HangerNumber smallint
@@ -140,10 +160,50 @@ Table Keys {
   Type uuid [ref: > KeyTypes.Id]
   Number smallint [unique]
   CurrentOwner uuid [ref: > Users.Id]
+  DefaultLocation uuid [ref: > Locations.Id]
   CurrentLocation uuid [ref: > Locations.Id]
   DateReceived datetime
   DateReturned datetime
+  LastAction nvarchar
+  LastActionComment text
   LastChange datetime
+}
+
+// Key colections
+Table KeyRings {
+  Id uuid [primary key]
+  Label nvarchar
+  Description text
+  Image image
+  DefaultLocation uuid [ref: > Locations.Id]
+  CurrentLocation uuid [ref: > Locations.Id]
+}
+
+Table LockTypes {
+  Id uuid [primary key]
+  Number varchar [not null]
+  Name nvarchar (64)
+  Description text
+  HangerNumber smallint
+  LastChange datetime
+}
+
+Table Locks{
+  Id uuid [primary key]
+  Type uuid [ref: > LockTypes.Id]
+  Number smallint [unique]
+  DefaultLocation uuid [ref: > Locations.Id]
+  CurrentLocation uuid [ref: > Locations.Id]
+  DateReceived datetime
+  DateReturned datetime
+  LastAction nvarchar
+  LastActionComment text
+  LastChange datetime
+}
+
+Table KeyTypesToLockTypes {
+  KeyType uuid [ref: > KeyTypes.Id]
+  LockType uuid [ref: > LockTypes.Id]
 }
 
 // Type of Inventory Items
@@ -167,3 +227,5 @@ Table InventoryItem {
 Table Events {
   Id uuid [primary key]
 }
+
+Ref: "KeyRings"."Id" < "Keys"."Id"

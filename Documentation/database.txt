@@ -206,6 +206,12 @@ Table KeyTypesToLockTypes {
   LockType uuid [ref: > LockTypes.Id]
 }
 
+// Direct association, should we use an electronic keycard system with individual associations.
+Table KeysToLocks{
+  Key uuid [ref: > Keys.Id]
+  Lock uuid [ref: > Locks.Id]
+}
+
 // Type of Inventory Items
 Table InventoryItemType {
   Id uuid [primary key]

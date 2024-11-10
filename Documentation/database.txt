@@ -16,10 +16,12 @@ Table Users {
   LastName nvarchar(255)
   Initials nvarchar(16)
   Nickname nvarchar(255)
-  Birthdate timestamp
-  PublicImage image
-  InternalImage image
+  Birthdate datetime
+  PublicImagePath string
+  InternalImagePath string
+  Description text
   Notes text
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -34,6 +36,7 @@ Table Roles {
 Table UserRoles{
   User uuid [ref: > Users.Id]
   Role uuid [ref: > Roles.Id]
+  CreationDate datetime
 }
 
 // Group Users into groups
@@ -47,6 +50,7 @@ Table Groups {
 Table UserGroups{
   User uuid [ref: > Users.Id]
   Group uuid [ref: > Groups.Id]
+  CreationDate datetime
 }
 
 // Address data
@@ -60,6 +64,7 @@ Table Addresses {
   Country varchar(255)
   Telephone varchar(20)
   Email varchar(255)
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -67,17 +72,21 @@ Table Addresses {
 Table UserAddresses {
   User uuid [ref: > Users.Id]
   Address uuid [ref: > Addresses.Id]
+  CreationDate datetime
 }
 
 Table Emails {
   Id uuid [primary key]
   Address varchar [not null]
   Label nvarchar [not null]
+  CreationDate datetime
+  LastChange datetime
 }
 
 Table UserEmails {
   User uuid [ref: > Users.Id]
   Email uuid [ref: > Emails.Id]
+  CreationDate datetime
 }
 
 Table TelefoneNumbers {
@@ -85,11 +94,14 @@ Table TelefoneNumbers {
   Number varchar [not null]
   Label nvarchar [not null]
   Type uint // Mobile, Landline, Fax, ...
+  CreationDate datetime
+  LastChange datetime
 }
 
 Table UserTelNumbers {
   User uuid [ref: > Users.Id]
   TelNumber uuid [ref: > TelefoneNumbers.Id]
+  CreationDate datetime
 }
 
 // Allow representation of external websites
@@ -98,7 +110,8 @@ Table LinkedSites {
   Name varchar(16)
   Category tinyint
   Link varchar(255)
-  Icon image
+  IconPath string
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -106,13 +119,54 @@ Table LinkedSites {
 Table UserLinkedSites {
  User uuid [ref: > Users.Id]
  Site uuid [ref: > LinkedSites.Id]
+ CreationDate datetime
 }
+
+Table UserOrganisations{
+  User uuid [ref: > Users.Id]
+  Organisation uuid [ref: > Organisations.Id]
+}
+
+Table Organisations {
+  Id uuid [primary key]
+  Name varchar(64) [not null, unique]
+  Description text
+  studentic bool
+  CreationDate datetime
+  LastUpdate datetime
+}
+
+Table OrganisationAddresses{
+  Organisation uuid [ref: > Organisations.Id]
+  Address uuid [ref:> Addresses.Id]
+  CreationDate datetime
+}
+
+Table OrganisationEmails{
+  Organisation uuid [ref: > Organisations.Id]
+  Email uuid [ref:> Emails.Id]
+  CreationDate datetime
+}
+
+Table OrganisationTelNumbers{
+  Organisation uuid [ref: > Organisations.Id]
+  TelNumber uuid [ref:> TelefoneNumbers.Id]
+  CreationDate datetime
+}
+
+Table OrganisationLinkedSites{
+  Organisation uuid [ref: > Organisations.Id]
+  Site uuid [ref:> LinkedSites.Id]
+  CreationDate datetime
+}
+
 
 Table Buildings {
   Id uuid [primary key]
   Address uint [ref: > Addresses.Id]
   Name nvarchar(255)
   Nickname nvarchar(255)
+  CreationDate datetime
 }
 
 // Available Rooms
@@ -125,23 +179,31 @@ Table Rooms {
   CanBeBooked bool
   SizeSqm mediumint 
   CapacityPpl mediumint
+  LastChange datetime
 }
 
 // What influence the use of one room has on another
 Table RoomInfluence {
   OccupiedRoom uuid [ref: > Rooms.Id]
   AffectedRoom uuid [ref: > Rooms.Id]
+  AffectsAccess bool
   AffectsSound bool
   AffectsSmell bool
   AffectsOccupation bool
+  CreationDate datetime
+  LastChange datetime
 }
 
 // Commonly used locations e.g. Cupboards, Closets, Safes, etc.
-Table Locations {
+Table RoomLocations {
   Id uuid [primary key]
   Name nvarchar(64)
   Room uuid [ref: > Rooms.Id]
+  RoomLoaction uuid [ref: > RoomLocations.Id]
   Description text
+  ImagePath string
+  CreationDate datetime
+  LastChange datetime
 }
 
 // Type of keys that exist
@@ -151,6 +213,7 @@ Table KeyTypes {
   Name nvarchar (64)
   Description text
   HangerNumber smallint
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -160,12 +223,13 @@ Table Keys {
   Type uuid [ref: > KeyTypes.Id]
   Number smallint [unique]
   CurrentOwner uuid [ref: > Users.Id]
-  DefaultLocation uuid [ref: > Locations.Id]
-  CurrentLocation uuid [ref: > Locations.Id]
+  DefaultLocation uuid [ref: > RoomLocations.Id]
+  CurrentLocation uuid [ref: > RoomLocations.Id]
   DateReceived datetime
   DateReturned datetime
   LastAction nvarchar
   LastActionComment text
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -174,9 +238,11 @@ Table KeyRings {
   Id uuid [primary key]
   Label nvarchar
   Description text
-  Image image
-  DefaultLocation uuid [ref: > Locations.Id]
-  CurrentLocation uuid [ref: > Locations.Id]
+  ImagePath string
+  DefaultLocation uuid [ref: > RoomLocations.Id]
+  CurrentLocation uuid [ref: > RoomLocations.Id]
+  CreationDate datetime
+  LastChange datetime
 }
 
 Table LockTypes {
@@ -185,6 +251,7 @@ Table LockTypes {
   Name nvarchar (64)
   Description text
   HangerNumber smallint
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -192,12 +259,13 @@ Table Locks{
   Id uuid [primary key]
   Type uuid [ref: > LockTypes.Id]
   Number smallint [unique]
-  DefaultLocation uuid [ref: > Locations.Id]
-  CurrentLocation uuid [ref: > Locations.Id]
+  DefaultLocation uuid [ref: > RoomLocations.Id]
+  CurrentLocation uuid [ref: > RoomLocations.Id]
   DateReceived datetime
   DateReturned datetime
   LastAction nvarchar
   LastActionComment text
+  CreationDate datetime
   LastChange datetime
 }
 
@@ -206,32 +274,128 @@ Table KeyTypesToLockTypes {
   LockType uuid [ref: > LockTypes.Id]
 }
 
-// Direct association, should we use an electronic keycard system with individual associations.
+// Direct association, should we use an electronik keycard system with individual associations.
 Table KeysToLocks{
   Key uuid [ref: > Keys.Id]
   Lock uuid [ref: > Locks.Id]
 }
 
+Table ProfilesToLocks{
+  Profile uuid [ref: > KeyProfiles.Id]
+  Lock uuid [ref: > Locks.Id]
+  CreationDate datetime
+}
+
+Table KeyProfiles{
+  Id uuid [primary key]
+  Name varchar(64)
+  Description text
+  Locks uuid [ref: > Locks.Id]
+  CreationDate datetime
+  LastChange datetime
+}
+
 // Type of Inventory Items
-Table InventoryItemType {
+Table InventoryItemTypes {
   Id uuid [primary key]
   Name nvarchar (64)
   Description text
-  Category varchar(64)
+  ImagePath string
+  Category uuid [ref: > ItemTypeCategories.Id]
+  AmountExisting uint
+  AmountAvailable unit
+  DefaultLocation uuid [ref: > RoomLocations.Id]
+  Rentable bool
+  PriceCt int
+  Specifications text
+  Comment text
+  CreationDate datetime
   LastChange datetime
 }
 
 // Individual Inventory Items
-Table InventoryItem {
-  ID uuid 
-  Type uuid [ref: > InventoryItemType.Id]
+Table InventoryItemTypeLocations {
+  Type uuid [ref: > InventoryItemTypes.Id]
+  Location uuid [ref: > RoomLocations.Id]
   Number int [unique]
-  Location uuid [ref: > Locations.Id]
+  LastChange datetime
+}
+
+Table ItemTypeCategories
+{
+  Id uuid [primary key]
+  Name varchar(64)
+  Description text
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table ItemTags{
+  Id uuid [primary key]
+  ItemType uuid [ref: > InventoryItemTypes.Id]
+  TagGroup uuid [ref: > ItemTagGroups.Id]
+  Name varchar (32)
+  Description text
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table ItemTagGroups {
+  Id uuid [primary key]
+  Name varchar(64)
+  Description text
+  CreationDate datetime
   LastChange datetime
 }
 
 Table Events {
   Id uuid [primary key]
+  Title string
+  Description text
+  Participants uuid [ref: > Users.Id]
+  ExpectedPatricipantCount uint
+  EntryFee ufloat
+  ExpectedCosts ufloat
+  ExpectedCostReasons text
+  Studentic bool
+  LiveMusicPlayed bool
+  GemaRequired bool
+  StartTime datetime
+  EndTime datetime
+  Series uuid [ref: > EventSeries.Id]
+  Organiser uuid [ref: > Users.Id]
+  Organisation uuid [ref: > Organisations.Id]
+  Rooms uuid [ref: > Rooms.Id]
+  Items uuid [ref: > InventoryItemTypes.Id]
+  PosterPath image
+  PromoImagePath image
+  Type enum
+  Visibility enum
+  CreationDate datetime
+  PublicationDate datetime
+  CreatedBy uuid [ref: > Users.Id]
+  LastChange datetime
+  Status enum
+  Tutor uuid [ref: > Users.Id]
+  Remarks text
+  Requirements text
+}
+
+Table EventSeries{
+  Id uuid [primary key]
+  Rule string
+}
+
+
+Table ProcessItem {
+  Id uuid [primary key]
+  Event uuid [ref: > Events.Id]
+  PrevItem uuid [ref: > ProcessItem.Id]
+  NextItem uuid [ref: > ProcessItem.Id]
+  UpdateTime datetime
+  Label nvarchar
+  Description text
+  Type enum
 }
 
 Ref: "KeyRings"."Id" < "Keys"."Id"

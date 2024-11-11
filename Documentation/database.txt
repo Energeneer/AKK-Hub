@@ -23,6 +23,7 @@ Table Users {
   Notes text
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Used to assign permissions
@@ -30,13 +31,13 @@ Table Roles {
   Id uuid [primary key]
   Name nvarchar(32)
   Description text
+  Changelog text
 }
 
 // Give Users Roles
 Table UserRoles{
   User uuid [ref: > Users.Id]
   Role uuid [ref: > Roles.Id]
-  CreationDate datetime
 }
 
 // Group Users into groups
@@ -44,13 +45,13 @@ Table Groups {
   Id uuid [primary key]
   Name nvarchar(32)
   Description text
+  Changelog text
 }
 
 // Assign Users to groups
 Table UserGroups{
   User uuid [ref: > Users.Id]
   Group uuid [ref: > Groups.Id]
-  CreationDate datetime
 }
 
 // Address data
@@ -66,6 +67,7 @@ Table Addresses {
   Email varchar(255)
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Assign Addresses to Users
@@ -86,7 +88,6 @@ Table Emails {
 Table UserEmails {
   User uuid [ref: > Users.Id]
   Email uuid [ref: > Emails.Id]
-  CreationDate datetime
 }
 
 Table TelefoneNumbers {
@@ -101,7 +102,6 @@ Table TelefoneNumbers {
 Table UserTelNumbers {
   User uuid [ref: > Users.Id]
   TelNumber uuid [ref: > TelefoneNumbers.Id]
-  CreationDate datetime
 }
 
 // Allow representation of external websites
@@ -113,13 +113,13 @@ Table LinkedSites {
   IconPath string
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Assign Users to External Sites
 Table UserLinkedSites {
  User uuid [ref: > Users.Id]
  Site uuid [ref: > LinkedSites.Id]
- CreationDate datetime
 }
 
 Table UserOrganisations{
@@ -134,30 +134,29 @@ Table Organisations {
   studentic bool
   CreationDate datetime
   LastUpdate datetime
+  Changelog text
 }
 
 Table OrganisationAddresses{
   Organisation uuid [ref: > Organisations.Id]
   Address uuid [ref:> Addresses.Id]
-  CreationDate datetime
 }
 
 Table OrganisationEmails{
   Organisation uuid [ref: > Organisations.Id]
   Email uuid [ref:> Emails.Id]
   CreationDate datetime
+  Changelog text
 }
 
 Table OrganisationTelNumbers{
   Organisation uuid [ref: > Organisations.Id]
   TelNumber uuid [ref:> TelefoneNumbers.Id]
-  CreationDate datetime
 }
 
 Table OrganisationLinkedSites{
   Organisation uuid [ref: > Organisations.Id]
   Site uuid [ref:> LinkedSites.Id]
-  CreationDate datetime
 }
 
 
@@ -167,6 +166,7 @@ Table Buildings {
   Name nvarchar(255)
   Nickname nvarchar(255)
   CreationDate datetime
+  Changelog text
 }
 
 // Available Rooms
@@ -180,6 +180,7 @@ Table Rooms {
   SizeSqm mediumint 
   CapacityPpl mediumint
   LastChange datetime
+  Changelog text
 }
 
 // What influence the use of one room has on another
@@ -192,6 +193,7 @@ Table RoomInfluence {
   AffectsOccupation bool
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Commonly used locations e.g. Cupboards, Closets, Safes, etc.
@@ -204,6 +206,7 @@ Table RoomLocations {
   ImagePath string
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Type of keys that exist
@@ -215,6 +218,7 @@ Table KeyTypes {
   HangerNumber smallint
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Individual keys
@@ -243,6 +247,7 @@ Table KeyRings {
   CurrentLocation uuid [ref: > RoomLocations.Id]
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table LockTypes {
@@ -253,6 +258,7 @@ Table LockTypes {
   HangerNumber smallint
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table Locks{
@@ -270,20 +276,19 @@ Table Locks{
 }
 
 Table KeyTypesToLockTypes {
-  KeyType uuid [ref: > KeyTypes.Id]
-  LockType uuid [ref: > LockTypes.Id]
+  KeyType uuid [primary key, ref: > KeyTypes.Id]
+  LockType uuid [primary key, ref: > LockTypes.Id]
 }
 
 // Direct association, should we use an electronik keycard system with individual associations.
 Table KeysToLocks{
-  Key uuid [ref: > Keys.Id]
-  Lock uuid [ref: > Locks.Id]
+  Key uuid [primary key, ref: > Keys.Id]
+  Lock uuid [primary key, ref: > Locks.Id]
 }
 
 Table ProfilesToLocks{
-  Profile uuid [ref: > KeyProfiles.Id]
-  Lock uuid [ref: > Locks.Id]
-  CreationDate datetime
+  Profile uuid [primary key, ref: > KeyProfiles.Id]
+  Lock uuid [primary key, ref: > Locks.Id]
 }
 
 Table KeyProfiles{
@@ -293,6 +298,7 @@ Table KeyProfiles{
   Locks uuid [ref: > Locks.Id]
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Type of Inventory Items
@@ -312,6 +318,7 @@ Table InventoryItemTypes {
   Comment text
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 // Individual Inventory Items
@@ -320,6 +327,7 @@ Table InventoryItemTypeLocations {
   Location uuid [ref: > RoomLocations.Id]
   Number int [unique]
   LastChange datetime
+  Changelog text
 }
 
 Table ItemTypeCategories
@@ -329,6 +337,7 @@ Table ItemTypeCategories
   Description text
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table ItemTags{
@@ -339,6 +348,7 @@ Table ItemTags{
   Description text
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table ItemTagGroups {
@@ -347,6 +357,7 @@ Table ItemTagGroups {
   Description text
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table TimeFrames {
@@ -356,6 +367,7 @@ Table TimeFrames {
   Series uuid [ref: > Series.Id]
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table Series{
@@ -363,6 +375,7 @@ Table Series{
   Rule string
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table RoomReservations {
@@ -372,6 +385,7 @@ Table RoomReservations {
   CreatedBy uuid [ref: > Users.Id]
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table ItemReservations {
@@ -386,6 +400,7 @@ Table ItemReservations {
   CreatedBy uuid [ref: > Users.Id]
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table Participants {
@@ -397,6 +412,7 @@ Table Participants {
   PayedAmountCt uint
   CreationDate datetime
   LastChange datetime
+  Changelog text
 }
 
 Table EventOptions {
@@ -405,9 +421,10 @@ Table EventOptions {
   Title tinytext
   Description text
   CostCt uint
+  Optional bool
   CreationDate datetime
   LastChange datetime
-  Optional bool
+  Changelog text
 }
 
 Table Events {
@@ -436,33 +453,7 @@ Table Events {
   CreatedBy uuid [ref: > Users.Id]
   CreationDate datetime
   LastChange datetime
-}
-
-Table Updates {
-  Id uuid [primary key]
-  PrevUpdate uuid [ref: > Updates.Id]
-  NextUpdate uuid [ref: > Updates.Id]
-  UpdateTime datetime
-  Label nvarchar
-  Description text
-  Type enum
-  CreationDate datetime
-  LastChange datetime
-}
-
-Table EventUpdates {
-  Update uuid [primary key, ref:> Updates.Id]
-  Event uuid [primary key, ref:> Events.Id]
-}
-
-Table RoomReservationUpdates {
-  Update uuid [primary key, ref:> Updates.Id]
-  RoomReservation uuid [primary key, ref:> RoomReservations.Id]
-}
-
-Table ItemReservationUpdates {
-  Update uuid [primary key, ref:> Updates.Id]
-  ItemReservation uuid [primary key, ref:> ItemReservations.Id]
+  Changelog text
 }
 
 Ref: "KeyRings"."Id" < "Keys"."Id"

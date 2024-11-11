@@ -438,17 +438,31 @@ Table Events {
   LastChange datetime
 }
 
-Table ProcessItem {
+Table Updates {
   Id uuid [primary key]
-  Event uuid [ref: > Events.Id]
-  PrevItem uuid [ref: > ProcessItem.Id]
-  NextItem uuid [ref: > ProcessItem.Id]
+  PrevUpdate uuid [ref: > Updates.Id]
+  NextUpdate uuid [ref: > Updates.Id]
   UpdateTime datetime
   Label nvarchar
   Description text
   Type enum
   CreationDate datetime
   LastChange datetime
+}
+
+Table EventUpdates {
+  Update uuid [primary key, ref:> Updates.Id]
+  Event uuid [primary key, ref:> Events.Id]
+}
+
+Table RoomReservationUpdates {
+  Update uuid [primary key, ref:> Updates.Id]
+  RoomReservation uuid [primary key, ref:> RoomReservations.Id]
+}
+
+Table ItemReservationUpdates {
+  Update uuid [primary key, ref:> Updates.Id]
+  ItemReservation uuid [primary key, ref:> ItemReservations.Id]
 }
 
 Ref: "KeyRings"."Id" < "Keys"."Id"

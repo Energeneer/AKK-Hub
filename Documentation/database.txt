@@ -306,7 +306,8 @@ Table InventoryItemTypes {
   AmountAvailable unit
   DefaultLocation uuid [ref: > RoomLocations.Id]
   Rentable bool
-  PriceCt int
+  PriceCt uint
+  ReplacementCostCt uint
   Specifications text
   Comment text
   CreationDate datetime
@@ -348,44 +349,94 @@ Table ItemTagGroups {
   LastChange datetime
 }
 
+Table TimeFrames {
+  Id uuid [primary key]
+  StartTime datetime
+  EndTime datetime
+  Series uuid [ref: > Series.Id]
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table Series{
+  Id uuid [primary key]
+  Rule string
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table RoomReservations {
+  Id uuid [primary key]
+  TimeFrame uuid [ref:> TimeFrames.Id]
+  Room uuid [ref: > RoomLocations.Id]
+  CreatedBy uuid [ref: > Users.Id]
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table ItemReservations {
+  Id uuid [primary key]
+  TimeFrame uuid [ref:> TimeFrames.Id]
+  ItemType uuid [primary key, ref: > InventoryItemTypes.Id]
+  Unit enum
+  AmountHandedOut ufloat
+  HandedOutBy uuid [ref: > Users.Id]
+  AmountReturned ufloat
+  ReturnAcceptedBy uuid [ref: > Users.Id]
+  CreatedBy uuid [ref: > Users.Id]
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table Participants {
+  User uuid [primary key, ref: > Users.Id]
+  Event uuid [primary key, ref: > Events.Id]
+  Role enum
+  Organisation uuid [ref: > Organisations.Id]
+  ChosenItems uuid [ref: > EventOptions.Id]
+  PayedAmountCt uint
+  CreationDate datetime
+  LastChange datetime
+}
+
+Table EventOptions {
+  Id uuid [primary key]
+  Event uuid [ref: > Events.Id]
+  Title tinytext
+  Description text
+  CostCt uint
+  CreationDate datetime
+  LastChange datetime
+  Optional bool
+}
+
 Table Events {
   Id uuid [primary key]
   Title string
   Description text
-  Participants uuid [ref: > Users.Id]
+  TimeFrame uuid [ref:> TimeFrames.Id]
   ExpectedPatricipantCount uint
-  EntryFee ufloat
-  ExpectedCosts ufloat
+  EntryFeeCt uint
+  ExpectedCostsCt uint
   ExpectedCostReasons text
   Studentic bool
   LiveMusicPlayed bool
   GemaRequired bool
-  StartTime datetime
-  EndTime datetime
-  Series uuid [ref: > EventSeries.Id]
-  Organiser uuid [ref: > Users.Id]
   Organisation uuid [ref: > Organisations.Id]
-  Rooms uuid [ref: > Rooms.Id]
-  Items uuid [ref: > InventoryItemTypes.Id]
+  Rooms uuid [ref: > RoomReservations.Id]
+  Items uuid [ref: > ItemReservations.Id]
   PosterPath image
   PromoImagePath image
   Type enum
   Visibility enum
-  CreationDate datetime
-  PublicationDate datetime
-  CreatedBy uuid [ref: > Users.Id]
-  LastChange datetime
   Status enum
-  Tutor uuid [ref: > Users.Id]
   Remarks text
   Requirements text
+  PublicationDate datetime
+  CreatedBy uuid [ref: > Users.Id]
+  CreationDate datetime
+  LastChange datetime
 }
-
-Table EventSeries{
-  Id uuid [primary key]
-  Rule string
-}
-
 
 Table ProcessItem {
   Id uuid [primary key]
@@ -396,6 +447,8 @@ Table ProcessItem {
   Label nvarchar
   Description text
   Type enum
+  CreationDate datetime
+  LastChange datetime
 }
 
 Ref: "KeyRings"."Id" < "Keys"."Id"

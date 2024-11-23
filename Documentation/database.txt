@@ -3,6 +3,14 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
+// Database Versions
+Table DBVersions {
+  Id uint [primary key]
+  Time datetime
+  ProductVersion tinytext
+  Description text
+}
+
 // Individual users
 Table Users {
   Id uint [primary key]

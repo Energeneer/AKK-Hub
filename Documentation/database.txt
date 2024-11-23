@@ -5,9 +5,9 @@
 
 // Individual users
 Table Users {
-  Id uuid [primary key]
+  Id uint [primary key]
   Username varchar(255) [not null, unique]
-  Password varchar(255) [not null]
+  PasswordHash varchar(255) [not null]
   OAuthToken nvarchar(255)
   WebAuthToken nvarchar(255)
   Title nvarchar(255)
@@ -22,36 +22,65 @@ Table Users {
   Description text
   Notes text
   CreationDate datetime
+  IsBlocked bool
+  InternalRemark text
   LastChange datetime
-  Changelog text
+}
+
+Table UserUpdates {
+  Id uint [primary Key]
+  User uint [ref: > Users.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Used to assign permissions
 Table Roles {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name nvarchar(32)
   Description text
-  Changelog text
+}
+
+Table RoleUpdates {
+  Id uint [primary Key]
+  Role uint [ref: > Roles.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Give Users Roles
 Table UserRoles{
-  User uuid [ref: > Users.Id]
-  Role uuid [ref: > Roles.Id]
+  User uint [ref: > Users.Id]
+  Role uint [ref: > Roles.Id]
 }
 
 // Group Users into groups
 Table Groups {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name nvarchar(32)
   Description text
-  Changelog text
+}
+
+Table GroupUpdates {
+  Id uint [primary Key]
+  Group iunt [ref: > Groups.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Assign Users to groups
 Table UserGroups{
-  User uuid [ref: > Users.Id]
-  Group uuid [ref: > Groups.Id]
+  User uint [ref: > Users.Id]
+  Group uint [ref: > Groups.Id]
 }
 
 // Address data
@@ -63,31 +92,51 @@ Table Addresses {
   ZipCode varchar(8)
   City nvarchar(255)
   Country varchar(255)
-  Telephone varchar(20)
-  Email varchar(255)
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table AddressEmails{
+  Address uint [ref: > Addresses.Id]
+  Email uint [ref: > Emails.Id]
+  IsPrimary bool
+}
+
+Table AddressTelNumbers{
+  Address uint [ref: > Addresses.Id]
+  TelNumber uint [ref: > TelefoneNumbers.Id]
+  IsPrimary bool
+}
+
+Table AddressUpdates {
+  Id uint [primary Key]
+  Address uint [ref: > Addresses.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Assign Addresses to Users
 Table UserAddresses {
-  User uuid [ref: > Users.Id]
-  Address uuid [ref: > Addresses.Id]
+  User uint [ref: > Users.Id]
+  Address uint [ref: > Addresses.Id]
+  IsPrimary bool
   CreationDate datetime
 }
 
 Table Emails {
-  Id uuid [primary key]
+  Id uint [primary key]
   Address varchar [not null]
   Label nvarchar [not null]
   CreationDate datetime
-  LastChange datetime
 }
 
 Table UserEmails {
-  User uuid [ref: > Users.Id]
-  Email uuid [ref: > Emails.Id]
+  User uint [ref: > Users.Id]
+  Email uint [ref: > Emails.Id]
+  IsPrimary bool
 }
 
 Table TelefoneNumbers {
@@ -96,82 +145,100 @@ Table TelefoneNumbers {
   Label nvarchar [not null]
   Type uint // Mobile, Landline, Fax, ...
   CreationDate datetime
-  LastChange datetime
 }
 
 Table UserTelNumbers {
-  User uuid [ref: > Users.Id]
-  TelNumber uuid [ref: > TelefoneNumbers.Id]
+  User uint [ref: > Users.Id]
+  TelNumber uint [ref: > TelefoneNumbers.Id]
+  IsPrimary bool
 }
 
 // Allow representation of external websites
 Table LinkedSites {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name varchar(16)
   Category tinyint
   Link varchar(255)
   IconPath string
   CreationDate datetime
-  LastChange datetime
-  Changelog text
 }
 
 // Assign Users to External Sites
 Table UserLinkedSites {
- User uuid [ref: > Users.Id]
- Site uuid [ref: > LinkedSites.Id]
+ User uint [ref: > Users.Id]
+ Site uint [ref: > LinkedSites.Id]
 }
 
 Table UserOrganisations{
-  User uuid [ref: > Users.Id]
-  Organisation uuid [ref: > Organisations.Id]
+  User uint [ref: > Users.Id]
+  Organisation uint [ref: > Organisations.Id]
 }
 
 Table Organisations {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name varchar(64) [not null, unique]
   Description text
-  studentic bool
+  IsStudentic bool
   CreationDate datetime
+  IsBlocked bool
+  InternalRemark text
   LastUpdate datetime
-  Changelog text
 }
 
 Table OrganisationAddresses{
-  Organisation uuid [ref: > Organisations.Id]
-  Address uuid [ref:> Addresses.Id]
+  Organisation uint [ref: > Organisations.Id]
+  Address uint [ref:> Addresses.Id]
+  IsPrimary bool
 }
 
 Table OrganisationEmails{
-  Organisation uuid [ref: > Organisations.Id]
-  Email uuid [ref:> Emails.Id]
+  Organisation uint [ref: > Organisations.Id]
+  Email uint [ref:> Emails.Id]
+  IsPrimary bool
   CreationDate datetime
-  Changelog text
 }
 
 Table OrganisationTelNumbers{
-  Organisation uuid [ref: > Organisations.Id]
-  TelNumber uuid [ref:> TelefoneNumbers.Id]
+  Organisation uint [ref: > Organisations.Id]
+  TelNumber uint [ref:> TelefoneNumbers.Id]
+  IsPrimary bool
 }
 
 Table OrganisationLinkedSites{
-  Organisation uuid [ref: > Organisations.Id]
-  Site uuid [ref:> LinkedSites.Id]
+  Organisation unit [ref: > Organisations.Id]
+  Site unit [ref:> LinkedSites.Id]
 }
 
+Table OrganisationUpdates {
+  Id uint [primary Key]
+  Organisation uint [ref: > Organisations.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
+}
 
 Table Buildings {
-  Id uuid [primary key]
+  Id uint [primary key]
   Address uint [ref: > Addresses.Id]
   Name nvarchar(255)
   Nickname nvarchar(255)
   CreationDate datetime
-  Changelog text
+}
+
+Table BuildingUpdates {
+  Id uint [primary Key]
+  Building uint [ref: > Buildings.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
 }
 
 // Available Rooms
 Table Rooms {
-  Id uuid [primary key]
+  Id uint [primary key]
   Building uuid [ref: > Buildings.Id]
   Name nvarchar(255)
   Description text
@@ -180,12 +247,22 @@ Table Rooms {
   SizeSqm mediumint 
   CapacityPpl mediumint
   LastChange datetime
-  Changelog text
+}
+
+Table RoomUpdates {
+  Id uint [primary Key]
+  Room uint [ref: > Rooms.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // What influence the use of one room has on another
-Table RoomInfluence {
-  OccupiedRoom uuid [ref: > Rooms.Id]
+Table RoomInfluences {
+  Id uint [primary key]
+  OccupiedRoom uint [ref: > Rooms.Id]
   AffectedRoom uuid [ref: > Rooms.Id]
   AffectsAccess bool
   AffectsSound bool
@@ -193,80 +270,135 @@ Table RoomInfluence {
   AffectsOccupation bool
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table RoomInfluenceUpdates {
+  Id uint [primary Key]
+  RoomInfluence uint [ref: > RoomInfluences.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Commonly used locations e.g. Cupboards, Closets, Safes, etc.
 Table RoomLocations {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name nvarchar(64)
-  Room uuid [ref: > Rooms.Id]
-  RoomLoaction uuid [ref: > RoomLocations.Id]
+  Room uniqueidentifier [ref: > Rooms.Id]
+  RoomLoaction uint [ref: > RoomLocations.Id]
   Description text
   ImagePath string
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table RoomLocationUpdates {
+  Id uint [primary Key]
+  RoomLocation uint [ref: > RoomLocations.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Type of keys that exist
 Table KeyTypes {
-  Id uuid [primary key]
-  Number varchar [not null]
+  Id uint [primary key]
   Name nvarchar (64)
   Description text
   HangerNumber smallint
   CreationDate datetime
   LastChange datetime
-  Changelog text
 }
+
+Table  KeyTypeUpdates {
+  Id uint [primary Key]
+  KeyType uint [ref: >  KeyTypes.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
+}
+
 
 // Individual keys
 Table Keys {
-  Id uuid [primary key]
-  Type uuid [ref: > KeyTypes.Id]
+  Id uint [primary key]
+  Type uint [ref: > KeyTypes.Id]
   Number smallint [unique]
   CurrentOwner uuid [ref: > Users.Id]
-  DefaultLocation uuid [ref: > RoomLocations.Id]
-  CurrentLocation uuid [ref: > RoomLocations.Id]
+  DefaultLocation uint [ref: > RoomLocations.Id]
+  CurrentLocation uint [ref: > RoomLocations.Id]
   DateReceived datetime
   DateReturned datetime
   LastAction nvarchar
   LastActionComment text
   CreationDate datetime
   LastChange datetime
+}
+
+Table  KeyUpdates {
+  Id uint [primary Key]
+  Key uint [ref: >  Keys.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Key colections
 Table KeyRings {
-  Id uuid [primary key]
+  Id uint [primary key]
   Label nvarchar
   Description text
   ImagePath string
-  DefaultLocation uuid [ref: > RoomLocations.Id]
-  CurrentLocation uuid [ref: > RoomLocations.Id]
+  DefaultLocation uint [ref: > RoomLocations.Id]
+  CurrentLocation uint [ref: > RoomLocations.Id]
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table  KeyRingUpdates {
+  Id uint [primary Key]
+  KeyRing uint [ref: >  KeyRings.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table LockTypes {
-  Id uuid [primary key]
+  Id uint [primary key]
   Number varchar [not null]
   Name nvarchar (64)
   Description text
   HangerNumber smallint
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table  LockTypeUpdates {
+  Id uint [primary Key]
+  LockType uint [ref: >  LockTypes.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table Locks{
-  Id uuid [primary key]
-  Type uuid [ref: > LockTypes.Id]
+  Id uint [primary key]
+  Type uint [ref: > LockTypes.Id]
   Number smallint [unique]
-  DefaultLocation uuid [ref: > RoomLocations.Id]
-  CurrentLocation uuid [ref: > RoomLocations.Id]
+  DefaultLocation uint [ref: > RoomLocations.Id]
+  CurrentLocation uint [ref: > RoomLocations.Id]
   DateReceived datetime
   DateReturned datetime
   LastAction nvarchar
@@ -275,185 +407,288 @@ Table Locks{
   LastChange datetime
 }
 
+Table  LockUpdates {
+  Id uint [primary Key]
+  Lock uint [ref: >  Locks.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
+}
+
 Table KeyTypesToLockTypes {
-  KeyType uuid [primary key, ref: > KeyTypes.Id]
-  LockType uuid [primary key, ref: > LockTypes.Id]
+  KeyType uint [primary key, ref: > KeyTypes.Id]
+  LockType uint [primary key, ref: > LockTypes.Id]
 }
 
 // Direct association, should we use an electronik keycard system with individual associations.
 Table KeysToLocks{
-  Key uuid [primary key, ref: > Keys.Id]
-  Lock uuid [primary key, ref: > Locks.Id]
+  Key uint [primary key, ref: > Keys.Id]
+  Lock uint [primary key, ref: > Locks.Id]
 }
 
 Table ProfilesToLocks{
-  Profile uuid [primary key, ref: > KeyProfiles.Id]
-  Lock uuid [primary key, ref: > Locks.Id]
+  Profile uint [primary key, ref: > KeyProfiles.Id]
+  Lock uint [primary key, ref: > Locks.Id]
 }
 
 Table KeyProfiles{
-  Id uuid [primary key]
+  Id uint [primary key]
   Name varchar(64)
   Description text
   Locks uuid [ref: > Locks.Id]
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table KeyProfileUpdates {
+  Id uint [primary Key]
+  KeyProfile uint [ref: >  KeyProfiles.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Type of Inventory Items
 Table InventoryItemTypes {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name nvarchar (64)
   Description text
   ImagePath string
-  Category uuid [ref: > ItemTypeCategories.Id]
+  Category uint [ref: > ItemTypeCategories.Id]
   AmountExisting uint
-  AmountAvailable unit
-  DefaultLocation uuid [ref: > RoomLocations.Id]
-  Rentable bool
+  AmountAvailable uint
+  DefaultLocation uint [ref: > RoomLocations.Id]
+  IsRentable bool
   PriceCt uint
   ReplacementCostCt uint
   Specifications text
   Comment text
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table InventoryItemTypeUpdates {
+  Id uint [primary Key]
+  InventoryItemType uint [ref: >  InventoryItemTypes.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 // Individual Inventory Items
 Table InventoryItemTypeLocations {
-  Type uuid [ref: > InventoryItemTypes.Id]
-  Location uuid [ref: > RoomLocations.Id]
-  Number int [unique]
-  LastChange datetime
-  Changelog text
+  Type uint [ref: > InventoryItemTypes.Id]
+  Location uint [ref: > RoomLocations.Id]
+  Count int [unique]
 }
 
 Table ItemTypeCategories
 {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name varchar(64)
   Description text
   CreationDate datetime
   LastChange datetime
-  Changelog text
 }
 
 Table ItemTags{
-  Id uuid [primary key]
-  ItemType uuid [ref: > InventoryItemTypes.Id]
-  TagGroup uuid [ref: > ItemTagGroups.Id]
+  Id uint [primary key]
+  ItemType uint [ref: > InventoryItemTypes.Id]
+  TagGroup uint [ref: > ItemTagGroups.Id]
   Name varchar (32)
   Description text
   CreationDate datetime
   LastChange datetime
-  Changelog text
 }
 
 Table ItemTagGroups {
-  Id uuid [primary key]
+  Id uint [primary key]
   Name varchar(64)
   Description text
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table ItemTagGroupUpdates {
+  Id uint [primary Key]
+  ItemTagGroup uint [ref: >  ItemTagGroups.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table TimeFrames {
-  Id uuid [primary key]
+  Id uint [primary key]
   StartTime datetime
   EndTime datetime
-  Series uuid [ref: > Series.Id]
+  TimeSeries uint [ref: > TimeSeries.Id]
   CreationDate datetime
   LastChange datetime
-  Changelog text
 }
 
-Table Series{
-  Id uuid [primary key]
+Table TimeFrameUpdates {
+  Id uint [primary Key]
+  TimeFrame uint [ref: >  TimeFrames.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
+}
+
+Table TimeSeries{
+  Id uint [primary key]
   Rule string
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table TimeSeriesUpdates {
+  Id uint [primary Key]
+  TimeSeries uint [ref: >  TimeSeries.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table RoomReservations {
-  Id uuid [primary key]
-  TimeFrame uuid [ref:> TimeFrames.Id]
-  Room uuid [ref: > RoomLocations.Id]
-  CreatedBy uuid [ref: > Users.Id]
+  Id uint [primary key]
+  TimeFrame uint [ref:> TimeFrames.Id]
+  Room uint [ref: > RoomLocations.Id]
+  CreatedBy uint [ref: > Users.Id]
   CreationDate datetime
+  Status enum
   LastChange datetime
   Changelog text
+}
+
+Table RoomReservationUpdates {
+  Id uint [primary Key]
+  RoomReservation uint [ref: >  RoomReservations.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table ItemReservations {
-  Id uuid [primary key]
-  TimeFrame uuid [ref:> TimeFrames.Id]
-  ItemType uuid [primary key, ref: > InventoryItemTypes.Id]
+  Id uint [primary key]
+  TimeFrame uint [ref:> TimeFrames.Id]
+  ItemType uint [primary key, ref: > InventoryItemTypes.Id]
   Unit enum
   AmountHandedOut ufloat
-  HandedOutBy uuid [ref: > Users.Id]
+  HandedOutBy uint [ref: > Users.Id]
   AmountReturned ufloat
-  ReturnAcceptedBy uuid [ref: > Users.Id]
-  CreatedBy uuid [ref: > Users.Id]
+  ReturnAcceptedBy uint [ref: > Users.Id]
+  CreatedBy uint [ref: > Users.Id]
   CreationDate datetime
+  Status enum
   LastChange datetime
   Changelog text
+}
+
+Table ItemReservationUpdates {
+  Id uint [primary Key]
+  ItemReservation uint [ref: >  ItemReservations.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table Participants {
-  User uuid [primary key, ref: > Users.Id]
-  Event uuid [primary key, ref: > Events.Id]
+  User uint [primary key, ref: > Users.Id]
+  Event uint [primary key, ref: > Events.Id]
   Role enum
-  Organisation uuid [ref: > Organisations.Id]
-  ChosenItems uuid [ref: > EventOptions.Id]
+  Organisation uint [ref: > Organisations.Id]
+  ChosenItems uint [ref: > EventOptions.Id]
   PayedAmountCt uint
   CreationDate datetime
+  HasAceptedEventRequirements bool
   LastChange datetime
-  Changelog text
+}
+
+Table ParticipantUpdates {
+  Id uint [primary Key]
+  Participant uint [ref: >  Participants.User]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table EventOptions {
-  Id uuid [primary key]
-  Event uuid [ref: > Events.Id]
+  Id uint [primary key]
+  Event uint [ref: > Events.Id]
   Title tinytext
   Description text
   CostCt uint
-  Optional bool
+  IsOptional bool
   CreationDate datetime
   LastChange datetime
-  Changelog text
+}
+
+Table EventOptionUpdates {
+  Id uint [primary Key]
+  EventOption uint [ref: >  EventOptions.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Table Events {
-  Id uuid [primary key]
+  Id uint [primary key]
   Title string
   Description text
-  TimeFrame uuid [ref:> TimeFrames.Id]
+  TimeFrame uint [ref:> TimeFrames.Id]
   ExpectedPatricipantCount uint
   EntryFeeCt uint
   ExpectedCostsCt uint
   ExpectedCostReasons text
-  Studentic bool
-  LiveMusicPlayed bool
-  GemaRequired bool
-  Organisation uuid [ref: > Organisations.Id]
-  Rooms uuid [ref: > RoomReservations.Id]
-  Items uuid [ref: > ItemReservations.Id]
+  IsStudentic bool
+  IsLiveMusicPlayed bool
+  IsGemaRequired bool
+  Organisation uint [ref: > Organisations.Id]
+  RoomReservation uint [ref: > RoomReservations.Id]
+  ItemReservation uint [ref: > ItemReservations.Id]
   PosterPath image
   PromoImagePath image
   Type enum
   Visibility enum
   Status enum
-  Remarks text
+  ExternalRemarks text
+  InternalRemarks text
   Requirements text
   PublicationDate datetime
-  CreatedBy uuid [ref: > Users.Id]
+  CreatedBy uint [ref: > Users.Id]
   CreationDate datetime
   LastChange datetime
   Changelog text
+}
+
+Table EventUpdates {
+  Id uint [primary Key]
+  Event uint [ref: >  Events.Id]
+  Time datetime
+  Type enum
+  Title tinytext
+  Text text
+  UpdatedBy uint
 }
 
 Ref: "KeyRings"."Id" < "Keys"."Id"

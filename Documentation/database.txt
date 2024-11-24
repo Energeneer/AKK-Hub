@@ -5,7 +5,7 @@
 
 // Database Versions
 Table DBVersions {
-  Id uint [primary key]
+  DatabaseVersion uint [primary key]
   Time datetime
   ProductVersion tinytext
   Description text
@@ -14,8 +14,8 @@ Table DBVersions {
 // Individual users
 Table Users {
   Id uint [primary key]
-  Username varchar(255) [not null, unique]
-  PasswordHash varchar(255) [not null]
+  Username varchar(255) [unique]
+  PasswordHash varchar(255)
   OAuthToken nvarchar(255)
   WebAuthToken nvarchar(255)
   Title nvarchar(255)
@@ -28,7 +28,6 @@ Table Users {
   PublicImagePath string
   InternalImagePath string
   Description text
-  Notes text
   CreationDate datetime
   IsBlocked bool
   InternalRemark text
@@ -100,6 +99,7 @@ Table Addresses {
   ZipCode varchar(8)
   City nvarchar(255)
   Country varchar(255)
+  Notes text
   CreationDate datetime
   LastChange datetime
 }
@@ -164,8 +164,8 @@ Table UserTelNumbers {
 // Allow representation of external websites
 Table LinkedSites {
   Id uint [primary key]
+  User uint [ref: > Users.Id]
   Name varchar(16)
-  Category tinyint
   Link varchar(255)
   IconPath string
   CreationDate datetime
@@ -341,8 +341,10 @@ Table Keys {
   CurrentOwner uuid [ref: > Users.Id]
   DefaultLocation uint [ref: > RoomLocations.Id]
   CurrentLocation uint [ref: > RoomLocations.Id]
-  DateReceived datetime
-  DateReturned datetime
+  ReceiveOnDate datetime
+  ReceivedOnDate datetime
+  ReturnByDate datetime
+  ReturnedByDate datetime
   LastAction nvarchar
   LastActionComment text
   CreationDate datetime
@@ -383,10 +385,8 @@ Table  KeyRingUpdates {
 
 Table LockTypes {
   Id uint [primary key]
-  Number varchar [not null]
   Name nvarchar (64)
   Description text
-  HangerNumber smallint
   CreationDate datetime
   LastChange datetime
 }
@@ -407,10 +407,6 @@ Table Locks{
   Number smallint [unique]
   DefaultLocation uint [ref: > RoomLocations.Id]
   CurrentLocation uint [ref: > RoomLocations.Id]
-  DateReceived datetime
-  DateReturned datetime
-  LastAction nvarchar
-  LastActionComment text
   CreationDate datetime
   LastChange datetime
 }
@@ -434,30 +430,6 @@ Table KeyTypesToLockTypes {
 Table KeysToLocks{
   Key uint [primary key, ref: > Keys.Id]
   Lock uint [primary key, ref: > Locks.Id]
-}
-
-Table ProfilesToLocks{
-  Profile uint [primary key, ref: > KeyProfiles.Id]
-  Lock uint [primary key, ref: > Locks.Id]
-}
-
-Table KeyProfiles{
-  Id uint [primary key]
-  Name varchar(64)
-  Description text
-  Locks uuid [ref: > Locks.Id]
-  CreationDate datetime
-  LastChange datetime
-}
-
-Table KeyProfileUpdates {
-  Id uint [primary Key]
-  KeyProfile uint [ref: >  KeyProfiles.Id]
-  Time datetime
-  Type enum
-  Title tinytext
-  Text text
-  UpdatedBy uint
 }
 
 // Type of Inventory Items
@@ -507,12 +479,16 @@ Table ItemTypeCategories
 
 Table ItemTags{
   Id uint [primary key]
-  ItemType uint [ref: > InventoryItemTypes.Id]
   TagGroup uint [ref: > ItemTagGroups.Id]
   Name varchar (32)
   Description text
   CreationDate datetime
   LastChange datetime
+}
+
+Table ItemTagsToInventoryItemTypes{
+  ItemTag uint [primary key, ref: > ItemTags.Id]
+  InventoryItemType uint [primary key, ref: > InventoryItemTypes.Id]
 }
 
 Table ItemTagGroups {

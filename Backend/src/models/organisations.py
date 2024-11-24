@@ -33,7 +33,7 @@ class OrganisationsTable(BASE):
     IsStudentic = Column(Boolean, nullable=False, default=False)
     """Whether the organisation is a Studentic organisation."""
 
-    CreationDate = Column(DateTime, nullable=False, default=datetime.now)
+    CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the organisation."""
 
     IsBlocked = Column(Boolean, nullable=False, default=True)
@@ -42,7 +42,7 @@ class OrganisationsTable(BASE):
     InternalRemark = Column(Text, nullable=True, default=None)
     """An internal remark about the organisation."""
 
-    LastUpdate = Column(DateTime, nullable=False, default=datetime.now)
+    LastUpdate = Column(DateTime, nullable=False, default=datetime.now())
 
 
 class Organisation(BaseModel):

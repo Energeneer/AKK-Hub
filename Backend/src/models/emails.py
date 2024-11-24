@@ -29,7 +29,7 @@ class EmailsTable(BASE):
     Label = Column(String, nullable=False)
     """The label of the email."""
 
-    CreationDate = Column(DateTime, nullable=False, default=datetime.now)
+    CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the email."""
 
 

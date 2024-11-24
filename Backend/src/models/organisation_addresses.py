@@ -31,7 +31,7 @@ class OrganisationAddressesTable(BASE):
     IsPrimary = Column(Boolean, nullable=False, default=True)
     """Indicates whether the address is the primary address for the organisation."""
 
-    CreationDate = Column(DateTime, nullable=False, default=datetime.now)
+    CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the connection."""
 
 

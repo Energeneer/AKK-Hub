@@ -45,10 +45,10 @@ class AddressesTable(BASE):
     Notes = Column(String, nullable=True, default=None)
     """Additional notes for the address."""
 
-    CreationDate = Column(DateTime, nullable=False, default=datetime.now)
+    CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the address."""
 
-    LastChange = Column(DateTime, nullable=False, default=datetime.now)
+    LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the address."""
 
 

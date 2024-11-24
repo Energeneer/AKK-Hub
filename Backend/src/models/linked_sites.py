@@ -33,7 +33,7 @@ class LinkedSitesTable(BASE):
     IconPath = Column(String, nullable=True)
     """The path to the icon of the linked site."""
 
-    CreationDate = Column(DateTime, nullable=False, default=datetime.now)
+    CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the linked site."""
 
 

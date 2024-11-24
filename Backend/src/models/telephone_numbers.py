@@ -52,7 +52,7 @@ class TelephoneNumbersTable(BASE):
     Type = Column(Integer, nullable=False)
     """The type of the telephone number."""
 
-    CreationDate = Column(DateTime, nullable=False, default=datetime.now)
+    CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the telephone number."""
 
 

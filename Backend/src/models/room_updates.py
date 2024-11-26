@@ -39,8 +39,8 @@ class RoomUpdatesTable(BASE):
     Title = Column(String, nullable=False)
     """The title of the update."""
 
-    UpdatedBy = Column(Integer, nullable=False, foreign_key="Rooms.Id")
-    """The room who updated the room."""
+    UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
+    """The user who updated the room."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -67,7 +67,7 @@ class RoomUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The room who updated the room."""
+    """The user reference who updated the room."""
 
     text: Optional[str] = None
     """The text of the update."""

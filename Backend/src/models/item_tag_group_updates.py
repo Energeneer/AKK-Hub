@@ -39,8 +39,8 @@ class ItemTagGroupUpdatesTable(BASE):
     Title = Column(String, nullable=False)
     """The title of the update."""
 
-    UpdatedBy = Column(Integer, nullable=False, foreign_key="ItemTagGroups.Id")
-    """The item_tag_group who updated the item_tag_group."""
+    UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
+    """The user who updated the item_tag_group."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -67,7 +67,7 @@ class ItemTagGroupUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The item_tag_group who updated the item_tag_group."""
+    """The user reference who updated the item_tag_group."""
 
     text: Optional[str] = None
     """The text of the update."""

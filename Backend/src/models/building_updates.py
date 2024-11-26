@@ -39,8 +39,8 @@ class BuildingUpdatesTable(BASE):
     Title = Column(String, nullable=False)
     """The title of the update."""
 
-    UpdatedBy = Column(Integer, nullable=False, foreign_key="Buildings.Id")
-    """The building who updated the building."""
+    UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
+    """The user who updated the building."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -67,7 +67,7 @@ class BuildingUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The building who updated the building."""
+    """The user reference who updated the building."""
 
     text: Optional[str] = None
     """The text of the update."""

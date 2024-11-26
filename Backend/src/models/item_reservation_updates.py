@@ -1,5 +1,5 @@
-# Backend/src/models/room_location_updates.py
-# Definition of the RoomLocationUpdate model, tracking updates to room_locations
+# Backend/src/models/item_reservation_updates.py
+# Definition of the ItemReservationUpdate model, tracking updates to item_reservations
 
 # Author: Valentin Haas, 2024
 
@@ -20,15 +20,15 @@ from updates import UpdateType
 BASE = declarative_base()
 
 
-class RoomLocationUpdatesTable(BASE):
-    """Model to track the updates of room_locations."""
+class ItemReservationUpdatesTable(BASE):
+    """Model to track the updates of inventory item types."""
 
-    __tablename__ = "RoomLocationUpdates"
+    __tablename__ = "ItemReservationUpdates"
     Id = Column(Integer, primary_key=True)
-    """The unique identifier of the room_location update."""
+    """The unique identifier of the inventory item type update."""
 
-    RoomLocation = Column(Integer, nullable=False)
-    """The room_location affected by the update."""
+    ItemReservation = Column(Integer, nullable=False)
+    """The key affected by the update."""
 
     Time = Column(DateTime, nullable=False)
     """The time of the update."""
@@ -40,22 +40,22 @@ class RoomLocationUpdatesTable(BASE):
     """The title of the update."""
 
     UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
-    """The user who updated the room_location."""
+    """The user who updated the inventory item type."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
 
 
-class RoomLocationUpdate(BaseModel):
-    """Model to track the updates of room_locations."""
+class ItemReservationUpdate(BaseModel):
+    """Model to track the updates of inventory item types."""
 
     model_config = ConfigDict(populate_by_name=True, alias_generator=to_pascal)
 
     id: int
-    """The unique identifier of the room_location update."""
+    """The unique identifier of the inventory item type update."""
 
-    room_location: int
-    """The room_location affected by the update."""
+    item_reservation_type: int
+    """The inventory item type affected by the update."""
 
     time: datetime
     """The time of the update."""
@@ -67,7 +67,7 @@ class RoomLocationUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The user reference who updated the room_location."""
+    """The person reference who updated the inventory item type."""
 
     text: Optional[str] = None
     """The text of the update."""

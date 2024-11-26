@@ -40,7 +40,7 @@ class AddressUpdatesTable(BASE):
     """The title of the update."""
 
     UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
-    """The user who updated the Address."""
+    """The user who updated the address."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -52,10 +52,10 @@ class AddressUpdate(BaseModel):
     model_config = ConfigDict(populate_by_name=True, alias_generator=to_pascal)
 
     id: int
-    """The unique identifier of the Address update."""
+    """The unique identifier of the address update."""
 
     address: int
-    """The Address affected by the update."""
+    """The address affected by the update."""
 
     time: datetime
     """The time of the update."""
@@ -67,7 +67,7 @@ class AddressUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The user who updated the Address."""
+    """The user reference who updated the Address."""
 
     text: Optional[str]
     """The text of the update."""

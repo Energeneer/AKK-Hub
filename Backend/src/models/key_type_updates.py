@@ -39,8 +39,8 @@ class KeyTypeUpdatesTable(BASE):
     Title = Column(String, nullable=False)
     """The title of the update."""
 
-    UpdatedBy = Column(Integer, nullable=False, foreign_key="KeyTypes.Id")
-    """The key_type who updated the key_type."""
+    UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
+    """The user who updated the key_type."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -67,7 +67,7 @@ class KeyTypeUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The key_type who updated the key_type."""
+    """The user reference who updated the key_type."""
 
     text: Optional[str] = None
     """The text of the update."""

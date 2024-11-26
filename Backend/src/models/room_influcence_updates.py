@@ -39,8 +39,8 @@ class RoomInflucenceUpdatesTable(BASE):
     Title = Column(String, nullable=False)
     """The title of the update."""
 
-    UpdatedBy = Column(Integer, nullable=False, foreign_key="RoomInflucences.Id")
-    """The room_influcence who updated the room_influcence."""
+    UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
+    """The user who updated the room_influcence."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -67,7 +67,7 @@ class RoomInflucenceUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The room_influcence who updated the room_influcence."""
+    """The user reference who updated the room_influcence."""
 
     text: Optional[str] = None
     """The text of the update."""

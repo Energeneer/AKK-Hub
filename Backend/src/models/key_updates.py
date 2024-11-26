@@ -67,7 +67,7 @@ class KeyUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The user who updated the key."""
+    """The user reference who updated the key."""
 
     text: Optional[str] = None
     """The text of the update."""

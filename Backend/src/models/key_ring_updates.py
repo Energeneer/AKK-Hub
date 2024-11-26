@@ -1,5 +1,5 @@
 # Backend/src/models/key_ring_updates.py
-# Definition of the KeyUpdate model, tracking updates to key_rings
+# Definition of the KeyRingUpdate model, tracking updates to key_rings
 
 # Author: Valentin Haas, 2024
 
@@ -20,14 +20,14 @@ from updates import UpdateType
 BASE = declarative_base()
 
 
-class KeyUpdatesTable(BASE):
+class KeyRingUpdatesTable(BASE):
     """Model to track the updates of key_rings."""
 
-    __tablename__ = "KeyUpdates"
+    __tablename__ = "KeyRingUpdates"
     Id = Column(Integer, primary_key=True)
     """The unique identifier of the key_ring update."""
 
-    Key = Column(Integer, nullable=False)
+    KeyRing = Column(Integer, nullable=False)
     """The key affected by the update."""
 
     Time = Column(DateTime, nullable=False)
@@ -40,13 +40,13 @@ class KeyUpdatesTable(BASE):
     """The title of the update."""
 
     UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
-    """The key_ring who updated the key_ring."""
+    """The user who updated the key_ring."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
 
 
-class KeyUpdate(BaseModel):
+class KeyRingUpdate(BaseModel):
     """Model to track the updates of key_rings."""
 
     model_config = ConfigDict(populate_by_name=True, alias_generator=to_pascal)
@@ -67,7 +67,7 @@ class KeyUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The person reference who updated the key_ring."""
+    """The user reference reference who updated the key_ring."""
 
     text: Optional[str] = None
     """The text of the update."""

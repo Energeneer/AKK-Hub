@@ -1,5 +1,5 @@
-# Backend/src/models/room_location_updates.py
-# Definition of the RoomLocationUpdate model, tracking updates to room_locations
+# Backend/src/models/participant_updates.py
+# Definition of the ParticipantUpdate model, tracking updates to participants
 
 # Author: Valentin Haas, 2024
 
@@ -20,15 +20,15 @@ from updates import UpdateType
 BASE = declarative_base()
 
 
-class RoomLocationUpdatesTable(BASE):
-    """Model to track the updates of room_locations."""
+class ParticipantUpdatesTable(BASE):
+    """Model to track the updates of participants."""
 
-    __tablename__ = "RoomLocationUpdates"
+    __tablename__ = "ParticipantUpdates"
     Id = Column(Integer, primary_key=True)
-    """The unique identifier of the room_location update."""
+    """The unique identifier of the participant update."""
 
-    RoomLocation = Column(Integer, nullable=False)
-    """The room_location affected by the update."""
+    Participant = Column(Integer, nullable=False)
+    """The participant affected by the update."""
 
     Time = Column(DateTime, nullable=False)
     """The time of the update."""
@@ -40,22 +40,22 @@ class RoomLocationUpdatesTable(BASE):
     """The title of the update."""
 
     UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
-    """The user who updated the room_location."""
+    """The user who updated the participant."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
 
 
-class RoomLocationUpdate(BaseModel):
-    """Model to track the updates of room_locations."""
+class ParticipantUpdate(BaseModel):
+    """Model to track the updates of participants."""
 
     model_config = ConfigDict(populate_by_name=True, alias_generator=to_pascal)
 
     id: int
-    """The unique identifier of the room_location update."""
+    """The unique identifier of the participant update."""
 
-    room_location: int
-    """The room_location affected by the update."""
+    participant: int
+    """The participant affected by the update."""
 
     time: datetime
     """The time of the update."""
@@ -67,7 +67,7 @@ class RoomLocationUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The user reference who updated the room_location."""
+    """The user reference who updated the participant."""
 
-    text: Optional[str] = None
+    text: Optional[str]
     """The text of the update."""

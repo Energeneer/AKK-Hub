@@ -67,7 +67,7 @@ class RoleUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The user who updated the role."""
+    """The user reference who updated the role."""
 
     text: Optional[str]
     """The text of the update."""

@@ -39,8 +39,8 @@ class LockTypeUpdatesTable(BASE):
     Title = Column(String, nullable=False)
     """The title of the update."""
 
-    UpdatedBy = Column(Integer, nullable=False, foreign_key="LockTypes.Id")
-    """The lock_type who updated the lock_type."""
+    UpdatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
+    """The user who updated the lock_type."""
 
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
@@ -67,7 +67,7 @@ class LockTypeUpdate(BaseModel):
     """The title of the update."""
 
     updated_by: int
-    """The lock_type who updated the lock_type."""
+    """The user reference who updated the lock_type."""
 
     text: Optional[str] = None
     """The text of the update."""

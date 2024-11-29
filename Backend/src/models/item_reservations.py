@@ -5,51 +5,36 @@
 
 # System imports
 from datetime import datetime
-from enum import Enum
+import enum
 from typing import Optional
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
+from sqlalchemy import Column, DateTime, Enum, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
 # Constants
 BASE = declarative_base()
 
-# Table ItemReservations {
-#   Id uint [primary key]
-#   TimeFrame uint [ref:> TimeFrames.Id]
-#   ItemType uint [primary key, ref: > InventoryItemTypes.Id]
-#   Unit enum
-#   AmountHandedOut ufloat
-#   HandedOutBy uint [ref: > Users.Id]
-#   AmountReturned ufloat
-#   ReturnAcceptedBy uint [ref: > Users.Id]
-#   CreatedBy uint [ref: > Users.Id]
-#   CreationDate datetime
-#   Status enum
-#   LastChange datetime
-# }
 
-
-class ItemReservationStatus(Enum):
+class ItemReservationStatus(enum.Enum):
     """Enum to define the status of an item reservation."""
 
-    Open = 0
+    OPEN = 0
     """The reservation is open."""
 
-    HandedOut = 1
+    HANDED_OUT = 1
     """The item has been handed out."""
 
-    Returned = 2
+    RETURNED = 2
     """The item has been returned."""
 
-    Cancelled = 3
+    CANCELLED = 3
     """The reservation has been cancelled."""
 
 
-class ItemReservationUnits(Enum):
+class ItemReservationUnits(enum.Enum):
     """Enum to define the units of an item reservation."""
 
     Pieces = 0
@@ -82,7 +67,7 @@ class ItemReservationsTable(BASE):
     ItemType = Column(Integer, nullable=False, foreign_key="InventoryItemTypes.Id")
     """The type of the item to reserve."""
 
-    Unit = Column(Integer, nullable=False)
+    Unit = Column(Enum(ItemReservationUnits), nullable=False)
     """The unit of the reservation."""
 
     AmountHandedOut = Column(Integer, nullable=False)
@@ -100,7 +85,7 @@ class ItemReservationsTable(BASE):
     CreatedBy = Column(Integer, nullable=False, foreign_key="Users.Id")
     """The user who created the reservation."""
 
-    Status = Column(Integer, nullable=False)
+    Status = Column(Enum(ItemReservationStatus), nullable=False)
     """The status of the reservation."""
 
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())

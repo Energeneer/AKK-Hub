@@ -5,19 +5,19 @@
 
 # System imports
 from datetime import datetime
-from enum import Enum
+import enum
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, DateTime, String
+from sqlalchemy import Column, DateTime, Enum, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 # Constants
 BASE = declarative_base()
 
 
-class TelephoneNumberType(Enum):
+class TelephoneNumberType(enum.Enum):
     """The type of the telephone number."""
 
     OTHER = 0
@@ -49,7 +49,7 @@ class TelephoneNumbersTable(BASE):
     Label = Column(String, nullable=False)
     """The label of the telephone number."""
 
-    Type = Column(Integer, nullable=False)
+    Type = Column(Enum(TelephoneNumberType), nullable=False)
     """The type of the telephone number."""
 
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())

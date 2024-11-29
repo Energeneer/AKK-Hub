@@ -10,11 +10,11 @@ from datetime import datetime
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, DateTime, String, Text
+from sqlalchemy import Column, DateTime, Enum, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 # Project imports
-from updates import UpdateType
+from .updates import UpdateType
 
 # Constants
 BASE = declarative_base()
@@ -33,7 +33,7 @@ class EventOptionUpdatesTable(BASE):
     Time = Column(DateTime, nullable=False)
     """The time of the update."""
 
-    Type = Column(UpdateType, nullable=False)
+    Type = Column(Enum(UpdateType), nullable=False)
     """The type of the update."""
 
     Title = Column(String, nullable=False)

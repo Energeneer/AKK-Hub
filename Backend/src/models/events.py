@@ -5,49 +5,20 @@
 
 # System imports
 from datetime import datetime
-from enum import Enum
+import enum
 from typing import Optional
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
+from sqlalchemy import Boolean, Column, DateTime, Enum, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 # Constants
 BASE = declarative_base()
 
-# Table Events {
-#   Id uint [primary key]
-#   Title string
-#   Description text
-#   TimeFrame uint [ref:> TimeFrames.Id]
-#   ExpectedPatricipantCount uint
-#   EntryFeeCt uint
-#   ExpectedCostsCt uint
-#   ExpectedCostReasons text
-#   IsStudentic bool
-#   IsLiveMusicPlayed bool
-#   IsGemaRequired bool
-#   Organisation uint [ref: > Organisations.Id]
-#   RoomReservation uint [ref: > RoomReservations.Id]
-#   ItemReservation uint [ref: > ItemReservations.Id]
-#   PosterPath image
-#   PromoImagePath image
-#   Type enum
-#   Visibility enum
-#   Status enum
-#   ExternalRemarks text
-#   InternalRemarks text
-#   Requirements text
-#   PublicationDate datetime
-#   CreatedBy uint [ref: > Users.Id]
-#   CreationDate datetime
-#   LastChange datetime
-# }
 
-
-class EventType(Enum):
+class EventType(enum.Enum):
     """Enumeration of event types."""
 
     Other = 0
@@ -60,7 +31,7 @@ class EventType(Enum):
     """Workshop event type."""
 
 
-class EventVisibility(Enum):
+class EventVisibility(enum.Enum):
     """Enumeration of event visibilities."""
 
     Public = 0
@@ -73,7 +44,7 @@ class EventVisibility(Enum):
     """Internal event visibility."""
 
 
-class EventStatus(Enum):
+class EventStatus(enum.Enum):
     """Enumeration of event statuses."""
 
     Draft = 0
@@ -141,13 +112,13 @@ class EventsTable(BASE):
     PromoImagePath = Column(String, nullable=True, default=None)
     """The path to the promotional image of the event."""
 
-    Type = Column(Enum, nullable=False)
+    Type = Column(Enum(EventType), nullable=False)
     """The type of the event."""
 
-    Visibility = Column(Enum, nullable=False)
+    Visibility = Column(Enum(EventVisibility), nullable=False)
     """The visibility of the event."""
 
-    Status = Column(Integer, nullable=False)
+    Status = Column(Enum(EventStatus), nullable=False)
     """The status of the event."""
 
     ExternalRemarks = Column(Text, nullable=True, default=None)

@@ -5,20 +5,20 @@
 
 # System imports
 from datetime import datetime
-from enum import Enum
 from typing import Optional
+import enum
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
+from sqlalchemy import Column, Enum, DateTime, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 # Constants
 BASE = declarative_base()
 
 
-class RoomReservationStatus(Enum):
+class RoomReservationStatus(enum.Enum):
     """Enum to track the status of the room reservation."""
 
     PENDING = 0
@@ -50,7 +50,7 @@ class RoomReservationsTable(BASE):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the room reservation."""
 
-    Status = Column(Integer, nullable=False)
+    Status = Column(Enum(RoomReservationStatus), nullable=False)
     """The status of the room reservation."""
 
     LastChange = Column(DateTime, nullable=False, default=datetime.now())

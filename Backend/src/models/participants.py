@@ -5,24 +5,42 @@
 
 # System imports
 from datetime import datetime
-from enum import Enum
+import enum
 from typing import Optional
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
+from sqlalchemy import Boolean, Column, DateTime, Enum, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
 # Constants
 BASE = declarative_base()
 
 
-class ParticipantRoles(Enum):
+class ParticipantRoles(enum.Enum):
     """Enum to define the roles of participants in events."""
 
-    Other = 0
+    OTHER = 0
     """The participant has another role in the event."""
+
+    ORGANIZER = 1
+    """The participant is an organizer of the event."""
+
+    SEPAKER = 2
+    """The participant is a speaker at the event."""
+
+    PARTICIPANT = 3
+    """The participant is a participant in the event."""
+
+    VISITOR = 4
+    """The participant is a visitor of the event."""
+
+    BAND = 5
+    """The participant is a band at the event."""
+
+    SPONSOR = 6
+    """The participant is a sponsor of the event."""
 
 
 class ParticipantsTable(BASE):
@@ -36,7 +54,7 @@ class ParticipantsTable(BASE):
     Event = Column(Integer, primary_key=True, foreign_key="Events.Id")
     """The unique identifier of the event."""
 
-    Role = Column(Integer, nullable=False)
+    Role = Column(Enum(ParticipantRoles), nullable=False)
     """The role of the participant in the event."""
 
     Organisation = Column(Integer, nullable=True, foreign_key="Organisations.Id")

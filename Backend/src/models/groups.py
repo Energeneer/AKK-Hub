@@ -10,13 +10,12 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class GroupsTable(BASE):
+class GroupsTable(BaseTable):
     """Model to track the groups of users."""
 
     __tablename__ = "Groups"

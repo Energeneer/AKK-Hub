@@ -5,13 +5,12 @@
 
 # Library imports
 from sqlalchemy import Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class UserGroupsTable(BASE):
+class UserGroupsTable(BaseTable):
     """Model to track the relationship between users and groups."""
 
     __tablename__ = "UserGroups"

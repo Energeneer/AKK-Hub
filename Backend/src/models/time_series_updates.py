@@ -4,23 +4,20 @@
 # Author: Valentin Haas, 2024
 
 # System imports
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, DateTime, Enum, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
 
 # Project imports
+from ._base import BaseTable
 from .updates import UpdateType
 
-# Constants
-BASE = declarative_base()
 
-
-class TimeSeriesUpdatesTable(BASE):
+class TimeSeriesUpdatesTable(BaseTable):
     """Model to track the updates of time_seriess."""
 
     __tablename__ = "TimeSeriesUpdates"

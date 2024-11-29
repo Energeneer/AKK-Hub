@@ -5,17 +5,16 @@
 
 # System imports
 from datetime import datetime
-import enum
 from typing import Optional
+import enum
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Boolean, Column, DateTime, Enum, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
 class ParticipantRoles(enum.Enum):
@@ -43,7 +42,7 @@ class ParticipantRoles(enum.Enum):
     """The participant is a sponsor of the event."""
 
 
-class ParticipantsTable(BASE):
+class ParticipantsTable(BaseTable):
     """Model to track participants in events."""
 
     __tablename__ = "Participants"

@@ -10,14 +10,13 @@ from typing import Optional
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, DateTime, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Boolean, Column, DateTime, Integer
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class OrganisationAddressesTable(BASE):
+class OrganisationAddressesTable(BaseTable):
     """Model to connect Organisations and Addresses."""
 
     __tablename__ = "OrganisationAddresses"

@@ -5,13 +5,12 @@
 
 # Library imports
 from sqlalchemy import Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class UserLinkedSitesTable(BASE):
+class UserLinkedSitesTable(BaseTable):
     """Definition of the UserLinkedSite model for the database."""
 
     __tablename__ = "UserLinkedSites"

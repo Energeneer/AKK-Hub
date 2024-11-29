@@ -11,13 +11,12 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, DateTime, String
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class BuildingsTable(BASE):
+class BuildingsTable(BaseTable):
     """Definition of the Buildings model for the database."""
 
     __tablename__ = "Buildings"

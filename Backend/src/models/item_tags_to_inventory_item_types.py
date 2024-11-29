@@ -4,14 +4,11 @@
 # Author: Valentin Haas, 2024
 
 # Library imports
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
-from sqlalchemy.ext.declarative import declarative_base
-
-# Constants
-BASE = declarative_base()
+from sqlalchemy import Column, Integer
+from ._base import BaseTable
 
 
-class ItemTagsToInventoryItemTypesTable(BASE):
+class ItemTagsToInventoryItemTypesTable(BaseTable):
     """Model to track the many-to-many relationship between item tags and inventory item types."""
 
     __tablename__ = "ItemTagsToInventoryItemTypes"

@@ -12,7 +12,7 @@ import importlib
 MODEL_FILES = [
     py_file
     for py_file in os.listdir(os.path.dirname(__file__))
-    if py_file.endswith(".py") and py_file != "__init__.py"
+    if py_file.endswith(".py") and not py_file.startswith("_")
 ]
 MODULES = [py_file[:-3] for py_file in MODEL_FILES]
 

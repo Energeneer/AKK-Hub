@@ -12,10 +12,9 @@ import enum
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Enum, DateTime, Integer, Text
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
 class RoomReservationStatus(enum.Enum):
@@ -31,7 +30,7 @@ class RoomReservationStatus(enum.Enum):
     """The room reservation is declined."""
 
 
-class RoomReservationsTable(BASE):
+class RoomReservationsTable(BaseTable):
     """Model to track the room reservations."""
 
     __tablename__ = "RoomReservations"

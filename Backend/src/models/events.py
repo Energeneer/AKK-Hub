@@ -12,10 +12,9 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Boolean, Column, DateTime, Enum, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
 class EventType(enum.Enum):
@@ -60,7 +59,7 @@ class EventStatus(enum.Enum):
     """Deleted event status."""
 
 
-class EventsTable(BASE):
+class EventsTable(BaseTable):
     """Model to track events."""
 
     __tablename__ = "Events"

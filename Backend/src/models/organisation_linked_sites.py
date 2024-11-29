@@ -5,13 +5,12 @@
 
 # Library imports
 from sqlalchemy import Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class OrganisationLinkedSitesTable(BASE):
+class OrganisationLinkedSitesTable(BaseTable):
     """Definition of the OrganisationLinkedSite model for the database."""
 
     __tablename__ = "OrganisationLinkedSites"

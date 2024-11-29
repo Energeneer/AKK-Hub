@@ -4,20 +4,19 @@
 # Valentin Haas, 2024
 
 # System imports
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, DateTime, String, Text
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class DBVersionsTable(BASE):
+class DBVersionsTable(BaseTable):
     """Model to track the database version history."""
 
     __tablename__ = "DBVersions"

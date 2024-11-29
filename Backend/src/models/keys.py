@@ -10,30 +10,13 @@ from typing import Optional
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, DateTime, Integer
 
-# Constants
-BASE = declarative_base()
-
-# // Individual keys
-# Table Keys {
-#   Id uint [primary key]
-#   Type uint [ref: > KeyTypes.Id]
-#   Number smallint [unique]
-#   CurrentOwner uuid [ref: > Users.Id]
-#   DefaultLocation uint [ref: > RoomLocations.Id]
-#   CurrentLocation uint [ref: > RoomLocations.Id]
-#   DateReceived datetime
-#   DateReturned datetime
-#   LastAction nvarchar
-#   LastActionComment text
-#   CreationDate datetime
-#   LastChange datetime
-# }
+# Project imports
+from ._base import BaseTable
 
 
-class KeysTable(BASE):
+class KeysTable(BaseTable):
     """Definition of the Keys model for the database."""
 
     __tablename__ = "Keys"

@@ -11,13 +11,12 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class OrganisationsTable(BASE):
+class OrganisationsTable(BaseTable):
     """Definition of the Organisation model for the database."""
 
     __tablename__ = "Organisations"

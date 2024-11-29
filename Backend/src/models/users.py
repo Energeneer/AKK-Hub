@@ -10,14 +10,13 @@ from typing import Optional
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Boolean, Column, Date, DateTime, Integer, String, Text
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class UsersTable(BASE):
+class UsersTable(BaseTable):
     """Definition of the User model for the database."""
 
     __tablename__ = "Users"

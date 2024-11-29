@@ -5,13 +5,12 @@
 
 # Library imports
 from sqlalchemy import Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class UserOrganisationsTable(BASE):
+class UserOrganisationsTable(BaseTable):
     """Definition of the UserOrganisation model for the database."""
 
     __tablename__ = "UserOrganisations"

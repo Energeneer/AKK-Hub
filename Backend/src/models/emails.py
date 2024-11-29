@@ -10,13 +10,12 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, DateTime, String
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class EmailsTable(BASE):
+class EmailsTable(BaseTable):
     """Definition of the Email model for the database."""
 
     __tablename__ = "Emails"

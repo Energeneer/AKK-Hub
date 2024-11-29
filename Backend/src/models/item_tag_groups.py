@@ -10,14 +10,13 @@ from typing import Optional
 # Library imports
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
-from sqlalchemy import Column, Integer, Date, DateTime, String, Text, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, DateTime, Integer, String, Text
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class ItemTagGroupsTable(BASE):
+class ItemTagGroupsTable(BaseTable):
     """Model to track the item tag groups."""
 
     __tablename__ = "ItemTagGroups"

@@ -10,13 +10,12 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class RolesTable(BASE):
+class RolesTable(BaseTable):
     """Model to track the roles of users."""
 
     __tablename__ = "Roles"

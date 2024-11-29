@@ -12,10 +12,9 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, DateTime, Enum, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
 class ItemReservationStatus(enum.Enum):
@@ -53,7 +52,7 @@ class ItemReservationUnits(enum.Enum):
     """The reservation is in liters."""
 
 
-class ItemReservationsTable(BASE):
+class ItemReservationsTable(BaseTable):
     """Model to track reservations of items (in events)."""
 
     __tablename__ = "ItemReservations"

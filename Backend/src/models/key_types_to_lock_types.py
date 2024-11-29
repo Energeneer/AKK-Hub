@@ -5,13 +5,12 @@
 
 # Library imports
 from sqlalchemy import Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class KeyTypesToLockTypesTable(BASE):
+class KeyTypesToLockTypesTable(BaseTable):
     """Model to track the relationship between key types and lock types."""
 
     __tablename__ = "KeyTypesToLockTypes"

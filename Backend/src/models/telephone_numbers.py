@@ -11,10 +11,9 @@ import enum
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, DateTime, Enum, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
 class TelephoneNumberType(enum.Enum):
@@ -36,7 +35,7 @@ class TelephoneNumberType(enum.Enum):
     """The telephone number is a fax number."""
 
 
-class TelephoneNumbersTable(BASE):
+class TelephoneNumbersTable(BaseTable):
     """Definition of the TelephoneNumber model for the database."""
 
     __tablename__ = "TelephoneNumbers"

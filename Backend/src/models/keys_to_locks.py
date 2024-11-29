@@ -6,13 +6,12 @@
 
 # Library imports
 from sqlalchemy import Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class KeysToLocksTable(BASE):
+class KeysToLocksTable(BaseTable):
     """Model to track the relationship between keys and locks."""
 
     __tablename__ = "KeysToLocks"

@@ -11,13 +11,12 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, DateTime
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class TimeFramesTable(BASE):
+class TimeFramesTable(BaseTable):
     """Model to track the time frames."""
 
     __tablename__ = "TimeFrames"

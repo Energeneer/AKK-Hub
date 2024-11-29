@@ -7,13 +7,12 @@
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_pascal
 from sqlalchemy import Column, Integer, Boolean
-from sqlalchemy.ext.declarative import declarative_base
 
-# Constants
-BASE = declarative_base()
+# Project imports
+from ._base import BaseTable
 
 
-class OrganisationTelNumbersTable(BASE):
+class OrganisationTelNumbersTable(BaseTable):
     """Definition of the OrganisationTelNumber model for the database."""
 
     __tablename__ = "OrganisationTelNumbers"

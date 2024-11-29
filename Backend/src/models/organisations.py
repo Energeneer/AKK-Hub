@@ -43,6 +43,9 @@ class OrganisationsTable(BaseTable):
 
     LastUpdate = Column(DateTime, nullable=False, default=datetime.now())
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Organisation)
+
 
 class Organisation(BaseModel):
     """Definition of the Organisation model for the API."""

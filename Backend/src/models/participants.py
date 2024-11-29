@@ -74,6 +74,9 @@ class ParticipantsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the participant."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Participant)
+
 
 class Participant(BaseModel):
     """Definition of the Participant model."""

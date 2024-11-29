@@ -77,6 +77,9 @@ class UsersTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change of the user."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, User)
+
 
 class User(BaseModel):
     """Definition of the User model for the API."""

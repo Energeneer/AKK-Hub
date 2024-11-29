@@ -35,6 +35,9 @@ class LinkedSitesTable(BaseTable):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the linked site."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, LinkedSite)
+
 
 class LinkedSite(BaseModel):
     """Definition of the LinkedSite model for the API."""

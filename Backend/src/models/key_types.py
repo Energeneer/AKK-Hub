@@ -38,6 +38,9 @@ class KeyTypesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the key type."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, KeyType)
+
 
 class KeyType(BaseModel):
     """Definition of the KeyTypes model for the API."""

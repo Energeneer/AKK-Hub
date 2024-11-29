@@ -42,6 +42,9 @@ class RoomLocationUpdatesTable(BaseTable):
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, RoomLocationUpdate)
+
 
 class RoomLocationUpdate(BaseModel):
     """Model to track the updates of room_locations."""

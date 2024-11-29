@@ -65,6 +65,9 @@ class InventoryItemTypesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change of the inventory item type."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, InventoryItemType)
+
 
 class InventoryItemType(BaseModel):
     """Definition of the InventoryItemTypes model for the API."""

@@ -26,6 +26,9 @@ class OrganisationEmailsTable(BaseTable):
     IsPrimary = Column(Boolean, nullable=False, default=False)
     """Whether the email is the primary email of the organisation."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, OrganisationEmail)
+
 
 class OrganisationEmail(BaseModel):
     """Definition of the OrganisationEmail model for the API."""

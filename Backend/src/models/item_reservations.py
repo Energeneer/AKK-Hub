@@ -93,6 +93,9 @@ class ItemReservationsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the reservation."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, ItemReservation)
+
 
 class ItemReservation(BaseModel):
     """Definition of the ItemReservation model."""

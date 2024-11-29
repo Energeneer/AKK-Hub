@@ -35,6 +35,9 @@ class BuildingsTable(BaseTable):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the building entry."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Buildings)
+
 
 class Buildings(BaseModel):
     """Definition of the Buildings model for the API."""

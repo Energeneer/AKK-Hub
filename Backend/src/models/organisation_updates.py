@@ -44,6 +44,9 @@ class OrganisationUpdatesTable(BaseTable):
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, OrganisationUpdate)
+
 
 class OrganisationUpdate(BaseModel):
     """Model to track the updates of organisations."""

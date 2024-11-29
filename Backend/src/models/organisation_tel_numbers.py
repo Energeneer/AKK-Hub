@@ -26,6 +26,9 @@ class OrganisationTelNumbersTable(BaseTable):
     IsPrimary = Column(Boolean, nullable=False, default=False)
     """Whether the telephone number is the primary telephone number of the organisation."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, OrganisationTelNumber)
+
 
 class OrganisationTelNumber(BaseModel):
     """Definition of the OrganisationTelNumber model for the API."""

@@ -32,6 +32,9 @@ class TimeSeriesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the time series."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, TimeSeries)
+
 
 class TimeSeries(BaseModel):
     """Definition of the TimeSeries model for the API."""

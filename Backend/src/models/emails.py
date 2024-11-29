@@ -31,6 +31,9 @@ class EmailsTable(BaseTable):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the email."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Email)
+
 
 class Email(BaseModel):
     """Definition of the Email model for the API."""

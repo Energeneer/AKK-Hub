@@ -26,6 +26,9 @@ class UserEmailsTable(BaseTable):
     IsPrimary = Column(Boolean, nullable=False, default=False)
     """Whether the email is the primary email of the user."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, UserEmail)
+
 
 class UserEmail(BaseModel):
     """Definition of the UserEmail model for the API."""

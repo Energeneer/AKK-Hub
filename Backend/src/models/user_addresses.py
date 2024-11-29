@@ -33,6 +33,9 @@ class UserAddressesTable(BaseTable):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the connection."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, UserAddress)
+
 
 class UserAddress(BaseModel):
     """Model to connect Users and Addresses."""

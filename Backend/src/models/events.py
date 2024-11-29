@@ -141,6 +141,9 @@ class EventsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change of the event."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Event)
+
 
 class Event(BaseModel):
     """Model to track events."""

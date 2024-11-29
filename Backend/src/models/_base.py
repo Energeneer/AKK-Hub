@@ -20,5 +20,16 @@ class BaseTable(DeclarativeBase):
 
     __abstract__ = True
 
+    @staticmethod
     def to_pydantic(db_object: "BaseTable", pydantic_model: Type[T]) -> T:
+        """
+        Convert a database object to a Pydantic model.
+
+        Args:
+            db_object (BaseTable): The database object to convert.
+            pydantic_model (Type[T]): The Pydantic model to convert to.
+
+        Returns:
+            T: The Pydantic model, filled with the data from the database object.
+        """
         return pydantic_model(**db_object.__dict__)

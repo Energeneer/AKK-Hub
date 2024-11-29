@@ -50,6 +50,9 @@ class AddressesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the address."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Address)
+
 
 class Address(BaseModel):
     """Definition of the Address model for the API."""

@@ -40,6 +40,9 @@ class ItemTagsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False)
     """The last change date of the tag."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, ItemTag)
+
 
 class ItemTag(BaseModel):
     """Model to track the tags of inventory items."""

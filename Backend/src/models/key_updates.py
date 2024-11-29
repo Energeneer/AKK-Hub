@@ -42,6 +42,9 @@ class KeyUpdatesTable(BaseTable):
     Text = Column(Text, nullable=True, default=None)
     """The text of the update."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, KeyUpdate)
+
 
 class KeyUpdate(BaseModel):
     """Model to track the updates of keys."""

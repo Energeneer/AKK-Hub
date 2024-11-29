@@ -54,6 +54,9 @@ class TelephoneNumbersTable(BaseTable):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the telephone number."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, TelephoneNumber)
+
 
 class TelephoneNumber(BaseModel):
     """Definition of the TelephoneNumber model for the API."""

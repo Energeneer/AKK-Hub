@@ -28,6 +28,9 @@ class RolesTable(BaseTable):
     Description = Column(Text, nullable=True, default=None)
     """The description of the role."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Role)
+
 
 class Role(BaseModel):
     """Model to track the roles of users."""

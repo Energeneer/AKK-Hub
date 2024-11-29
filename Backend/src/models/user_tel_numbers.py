@@ -26,6 +26,9 @@ class UserTelNumbersTable(BaseTable):
     IsPrimary = Column(Boolean, nullable=False, default=False)
     """Whether the telephone number is the primary telephone number of the user."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, UserTelNumber)
+
 
 class UserTelNumber(BaseModel):
     """Definition of the UserTelNumber model for the API."""

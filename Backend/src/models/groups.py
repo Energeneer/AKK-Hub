@@ -28,6 +28,9 @@ class GroupsTable(BaseTable):
     Description = Column(Text, nullable=True, default=None)
     """The description of the group."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Group)
+
 
 class Group(BaseModel):
     """Model to track the groups of users."""

@@ -30,6 +30,9 @@ class InventoryItemTypeLocationsTable(BaseTable):
     Count = Column(Integer, nullable=False)
     """The count of the inventory item type at the location."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, InventoryItemTypeLocation)
+
 
 class InventoryItemTypeLocation(BaseModel):
     """Model to track the locations of inventory items."""

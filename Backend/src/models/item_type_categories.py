@@ -35,6 +35,9 @@ class ItemTypeCategoriesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False)
     """The last change date of the item type category."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, ItemTypeCategory)
+
 
 class ItemTypeCategory(BaseModel):
     """Model to track the categories of inventory item types."""

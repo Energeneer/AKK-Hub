@@ -40,6 +40,9 @@ class TimeFramesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the time frame."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, TimeFrame)
+
 
 class TimeFrame(BaseModel):
     """Definition of the TimeFrame model for the API."""

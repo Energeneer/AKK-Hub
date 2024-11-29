@@ -32,6 +32,9 @@ class DBVersionsTable(BaseTable):
     Description = Column(Text, nullable=True)
     """A description of the changes made in this database schema."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, DBVersion)
+
 
 class DBVersion(BaseModel):
     """Model to track the database version history."""

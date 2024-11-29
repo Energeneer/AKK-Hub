@@ -47,6 +47,9 @@ class RoomInfluencesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change of the room influence entry."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, RoomInfluence)
+
 
 class RoomInfluence(BaseModel):
     """Definition of the RoomInfluences model for the API."""

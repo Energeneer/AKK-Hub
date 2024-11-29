@@ -35,6 +35,9 @@ class LockTypesTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the lock type."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, LockType)
+
 
 class LockType(BaseModel):
     """Definition of the LockType model for the API."""

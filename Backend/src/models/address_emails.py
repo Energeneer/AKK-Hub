@@ -29,6 +29,9 @@ class AddressEmailsTable(BaseTable):
     IsPrimary = Column(Boolean, nullable=False, default=True)
     """Indicates whether the email is the primary email for the address."""
 
+    def _to_pydantic(self):
+        return super()._to_pydantic(self, AddressEmail)
+
 
 class AddressEmail(BaseModel):
     """Definition of the AddressEmail model for the API."""

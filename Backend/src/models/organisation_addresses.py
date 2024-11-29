@@ -33,6 +33,9 @@ class OrganisationAddressesTable(BaseTable):
     CreationDate = Column(DateTime, nullable=False, default=datetime.now())
     """The creation date of the connection."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, OrganisationAddress)
+
 
 class OrganisationAddress(BaseModel):
     """Model to connect Organisations and Addresses."""

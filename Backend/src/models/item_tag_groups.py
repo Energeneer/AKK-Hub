@@ -35,6 +35,9 @@ class ItemTagGroupsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False)
     """The last change date of the item tag group."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, ItemTagGroup)
+
 
 class ItemTagGroup(BaseModel):
     """Model to track the item tag groups."""

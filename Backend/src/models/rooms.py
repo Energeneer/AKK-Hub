@@ -47,6 +47,9 @@ class RoomsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change of the room entry."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Rooms)
+
 
 class Rooms(BaseModel):
     """Definition of the Room model for the API."""

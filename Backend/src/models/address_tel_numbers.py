@@ -29,6 +29,9 @@ class AddressTelNumbersTable(BaseTable):
     IsPrimary = Column(Boolean, nullable=False, default=True)
     """Indicates whether the telefone number is the primary telefone number for the address."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, AddressTelNumber)
+
 
 class AddressTelNumber(BaseModel):
     """Definition of the AddressTelNumber model for the API."""

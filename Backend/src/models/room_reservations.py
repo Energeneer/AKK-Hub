@@ -58,6 +58,9 @@ class RoomReservationsTable(BaseTable):
     Changelog = Column(Text, nullable=True, default=None)
     """The changelog of the room reservation."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, RoomReservation)
+
 
 class RoomReservation(BaseModel):
     """Definition of the RoomReservation model for the API."""

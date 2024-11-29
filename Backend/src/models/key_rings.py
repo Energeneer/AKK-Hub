@@ -44,6 +44,9 @@ class KeyRingsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the key ring."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, KeyRing)
+
 
 class KeyRing(BaseModel):
     """Definition of the KeyRing model for the API."""

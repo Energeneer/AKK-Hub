@@ -44,6 +44,9 @@ class EventOptionsTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The date when the option was last changed."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, EventOption)
+
 
 class EventOption(BaseModel):
     """Model to track the options for events."""

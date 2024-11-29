@@ -56,6 +56,9 @@ class KeysTable(BaseTable):
     LastChange = Column(DateTime, nullable=False, default=datetime.now())
     """The last change date of the key."""
 
+    def to_pydantic(self):
+        return super().to_pydantic(self, Key)
+
 
 class Key(BaseModel):
     """Definition of the Keys model for the API."""

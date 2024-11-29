@@ -114,7 +114,7 @@ class User(BaseModel):
     initials: Optional[str] = None
     """The initials of the user."""
 
-    birthdate: Optional[Date] = None
+    birthdate: Optional[datetime] = None
     """The birthdate of the user."""
 
     public_image_path: Optional[str] = None

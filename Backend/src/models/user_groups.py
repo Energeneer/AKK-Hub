@@ -16,8 +16,8 @@ class UserGroupsTable(BASE):
 
     __tablename__ = "UserGroups"
 
-    User = Column(Integer, nullable=False, foreign_key="Users.Id")
+    User = Column(Integer, primary_key=True, foreign_key="Users.Id")
     """The user in the relationship."""
 
-    Group = Column(Integer, nullable=False, foreign_key="Groups.Id")
+    Group = Column(Integer, primary_key=True, foreign_key="Groups.Id")
     """The group in the relationship."""

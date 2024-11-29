@@ -16,8 +16,8 @@ class UserRolesTable(BASE):
 
     __tablename__ = "UserRoles"
 
-    User = Column(Integer, nullable=False, foreign_key="Users.Id")
+    User = Column(Integer, primary_key=True, foreign_key="Users.Id")
     """The user in the relationship."""
 
-    Role = Column(Integer, nullable=False, foreign_key="Roles.Id")
+    Role = Column(Integer, primary_key=True, foreign_key="Roles.Id")
     """The role in the relationship."""

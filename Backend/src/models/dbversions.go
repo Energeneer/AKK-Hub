@@ -9,7 +9,7 @@ import (
 )
 
 // DBVersions model to track the database version history.
-type DBVersions struct {
+type DBVersion struct {
 	gorm.Model              // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 	DatabaseVersion int     `gorm:"primaryKey"`                 // The version of the database schema.
 	ProductVersion  string  `gorm:"type:varchar(16); not null"` // The version of the product that was released with this database schema.

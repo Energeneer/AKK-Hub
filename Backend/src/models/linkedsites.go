@@ -9,7 +9,7 @@ import (
 )
 
 // LinkedSites defines the structure for representing external websites.
-type LinkedSites struct {
+type LinkedSite struct {
 	gorm.Model         // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 	Name       string  `gorm:"not null"` // The name of the linked site.
 	Link       string  `gorm:"not null"` // The link to the linked site.

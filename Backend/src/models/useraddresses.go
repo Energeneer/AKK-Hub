@@ -10,7 +10,8 @@ import (
 
 // UserAddress defines the UserAddress model for the database.
 type UserAddress struct {
-	User      int  `gorm:"primaryKey"`            // The unique identifier of the user.
-	Address   int  `gorm:"primaryKey"`            // The unique identifier of the address.
-	IsPrimary bool `gorm:"not null;default:true"` // Indicates whether the address is the primary address for the user.
+	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	User       int  `gorm:"primaryKey"`            // The unique identifier of the user.
+	Address    int  `gorm:"primaryKey"`            // The unique identifier of the address.
+	IsPrimary  bool `gorm:"not null;default:true"` // Indicates whether the address is the primary address for the user.
 }

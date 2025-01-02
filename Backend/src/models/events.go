@@ -5,15 +5,16 @@
 package models
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // Enumeration types for event properties
 type EventType int
 
 const (
-	Other EventType = iota
+	OtherEventType EventType = iota
 	Meeting
 	Workshop
 )

@@ -12,7 +12,7 @@ import (
 type ParticipantRoles int
 
 const (
-	OTHER       ParticipantRoles = iota // The participant has another role in the event.
+	OTHERROLE   ParticipantRoles = iota // The participant has another role in the event.
 	ORGANIZER                           // The participant is an organizer of the event.
 	SPEAKER                             // The participant is a speaker at the event.
 	PARTICIPANT                         // The participant is a participant in the event.
@@ -23,6 +23,7 @@ const (
 
 // Participants is a model to track participants in events.
 type Participant struct {
+	gorm.Model                                    // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 	User                         int              `gorm:"primaryKey"`        // The unique identifier of the user.
 	Event                        int              `gorm:"primaryKey"`        // The unique identifier of the event.
 	Role                         ParticipantRoles `gorm:"type:int;not null"` // The role of the participant in the event.

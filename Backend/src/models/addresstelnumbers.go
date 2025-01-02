@@ -9,7 +9,7 @@ import (
 )
 
 // AddressTelNumbers represents the connection between addresses and telephone numbers.
-type AddressTelNumbers struct {
+type AddressTelNumber struct {
 	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 	Address    uint `gorm:"primaryKey; foreignKey:Address; references:ID"`         // The unique identifier of the address, acts as part of composite primary key.
 	TelNumber  uint `gorm:"primaryKey; foreignKey:TelephoneNumber; references:ID"` // The unique identifier of the telephone number, acts as part of composite primary key.

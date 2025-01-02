@@ -12,11 +12,11 @@ import (
 type TelephoneNumberType int
 
 const (
-	OTHER  TelephoneNumberType = iota // The telephone number is of another type.
-	HOME                              // The telephone number is a home number.
-	MOBILE                            // The telephone number is a mobile number.
-	WORK                              // The telephone number is a work number.
-	FAX                               // The telephone number is a fax number.
+	OTHER_TEL_NUMBER_TYPE TelephoneNumberType = iota // The telephone number is of another type.
+	HOME                                             // The telephone number is a home number.
+	MOBILE                                           // The telephone number is a mobile number.
+	WORK                                             // The telephone number is a work number.
+	FAX                                              // The telephone number is a fax number.
 )
 
 // TelephoneNumbers defines the TelephoneNumber model for the database.

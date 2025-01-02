@@ -9,7 +9,7 @@ import (
 )
 
 // AddressEmails represents the model that connects addresses and emails in the database.
-type AddressEmails struct {
+type AddressEmail struct {
 	gorm.Model // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 
 	Address   int  `gorm:"primaryKey;not null"`   // The unique identifier of the address with a primary key constraint.

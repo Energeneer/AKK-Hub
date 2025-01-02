@@ -12,9 +12,9 @@ import (
 // EventUpdate models the tracking of updates to Events.
 type EventUpdate struct {
 	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Event      int        `gorm:"column:Event;not null"`                    // The event affected by the update.
-	Type       UpdateType `gorm:"not null"`                                 // The type of the update.
-	Title      string     `gorm:"not null"`                                 // The title of the update.
-	UpdatedBy  int        `gorm:"not null; foreignKey:User; references:ID"` // The user who updated the building.
-	Text       *string    `gorm:"type:text; default:null"`                  // The text of the update.
+	Event      uint       `gorm:"not null;foreignKey:EventID"` // The event that was updated (foreign key reference to Events.Id).
+	Type       UpdateType `gorm:"not null"`                    // The type of the update.
+	Title      string     `gorm:"not null"`                    // The title of the update.
+	UpdatedBy  uint       `gorm:"not null;foreignKey:UserID"`  // The user who updated the building (foreign key reference to Users.Id).
+	Text       *string    `gorm:"type:text; default:null"`     // The text of the update.
 }

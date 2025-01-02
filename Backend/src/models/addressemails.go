@@ -12,7 +12,7 @@ import (
 type AddressEmail struct {
 	gorm.Model // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 
-	Address   int  `gorm:"primaryKey;not null"`   // The unique identifier of the address with a primary key constraint.
-	Email     int  `gorm:"primaryKey;not null"`   // The unique identifier of the email with a primary key constraint.
-	IsPrimary bool `gorm:"default:true;not null"` // Indicates whether the email is the primary one for the address.
+	Address   uint `gorm:"primaryKey;not null;foreignKey:AddressID"` // The address of the email with a primary key constraint.
+	Email     uint `gorm:"primaryKey;not null;foreignKey:EmailID"`   // The email of the address with a primary key constraint.
+	IsPrimary bool `gorm:"default:true;not null"`                    // Indicates whether the email is the primary one for the address.
 }

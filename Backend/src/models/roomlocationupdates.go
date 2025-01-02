@@ -11,9 +11,9 @@ import (
 // RoomLocationUpdates is a model for tracking updates to room locations.
 type RoomLocationUpdate struct {
 	gorm.Model              // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	RoomLocation int        `gorm:"not null"` // The room_location affected by the update.
-	Type         UpdateType `gorm:"not null"` // The type of the update.
-	Title        string     `gorm:"not null"` // The title of the update.
-	UpdatedBy    int        `gorm:"not null"` // The user who updated the room_location.
+	RoomLocation uint       `gorm:"not null;foreignKey:RoomLocationID"` // The room_location that was updated (foreign key reference to RoomLocations.Id).
+	Type         UpdateType `gorm:"not null"`                           // The type of the update.
+	Title        string     `gorm:"not null"`                           // The title of the update.
+	UpdatedBy    uint       `gorm:"not null;foreignKey:UserID"`         // The user who updated the group (foreign key reference to Users.Id).
 	Text         *string    // The text of the update.
 }

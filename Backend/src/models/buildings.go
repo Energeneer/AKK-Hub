@@ -11,7 +11,7 @@ import (
 // Buildings definition of the Buildings model for the database.
 type Building struct {
 	gorm.Model         // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Address    int     `gorm:"not null; foreignKey:Addresses; references:ID"` // The address reference of the building.
-	Name       string  `gorm:"type:varchar(255); not null"`                   // The name of the building.
-	Nickname   *string `gorm:"type:varchar(255); default:null"`               // The nickname of the building.
+	Address    int     `gorm:"not null; foreignKey:AddressID"` // The address reference of the building.
+	Name       string  `gorm:"not null"`                       // The name of the building.
+	Nickname   *string `gorm:"default:null"`                   // The nickname of the building.
 }

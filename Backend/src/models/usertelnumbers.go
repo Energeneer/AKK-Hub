@@ -10,8 +10,8 @@ import (
 
 // UserTelNumber represents the user-telephone number model for the database.
 type UserTelNumber struct {
-	gorm.Model                 // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	User       User            `gorm:"primaryKey"` // The unique identifier of the user.
-	TelNumber  TelephoneNumber `gorm:"primaryKey"` // The unique identifier of the telephone number.
-	IsPrimary  bool            // Whether the telephone number is the primary telephone number of the user.
+	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	User       uint `gorm:"primaryKey;not null;foreignKey:UserID"`      // The user in the relationship (foreign key reference to User.ID).
+	TelNumber  uint `gorm:"primaryKey;not null;foreignKey:TelNumberID"` // The telephone number in the relationship (foreign key reference to TelNumber.ID).
+	IsPrimary  bool // Whether the telephone number is the primary telephone number of the user.
 }

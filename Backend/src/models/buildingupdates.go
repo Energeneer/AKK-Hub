@@ -11,9 +11,9 @@ import (
 // BuildingUpdate model to track the updates of buildings.
 type BuildingUpdate struct {
 	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Building   int        `gorm:"not null"`                                 // The building affected by the update.
-	Type       UpdateType `gorm:"not null"`                                 // The type of the update.
-	Title      string     `gorm:"not null"`                                 // The title of the update.
-	UpdatedBy  int        `gorm:"not null; foreignKey:User; references:ID"` // The user who updated the building.
-	Text       *string    `gorm:"type:text; default:null"`                  // The text of the update.
+	Building   uint       `gorm:"not null; foreignKey:BuildingID"` // The building that was updated (foreign key reference to Buildings.Id).
+	Type       UpdateType `gorm:"not null"`                        // The type of the update.
+	Title      string     `gorm:"not null"`                        // The title of the update.
+	UpdatedBy  uint       `gorm:"not null;foreignKey:UserID"`      // The user who updated the group (foreign key reference to Users.Id).
+	Text       *string    `gorm:"type:text; default:null"`         // The text of the update.
 }

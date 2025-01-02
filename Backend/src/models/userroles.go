@@ -11,6 +11,6 @@ import (
 // UserRole tracks the relationship between users and roles.
 type UserRole struct {
 	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	User       User `gorm:"primaryKey"` // The user in the relationship.
-	Role       Role `gorm:"primaryKey"` // The role in the relationship.
+	User       uint `gorm:"primaryKey;not null;foreignKey:UserID"` // The user in the relationship (foreign key reference to User.ID).
+	Role       uint `gorm:"primaryKey;not null;foreignKey:RoleID"` // The role in the relationship (foreign key reference to Role.ID).
 }

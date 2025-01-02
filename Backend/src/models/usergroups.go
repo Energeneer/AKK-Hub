@@ -10,7 +10,7 @@ import (
 
 // UserGroup tracks the relationship between users and groups.
 type UserGroup struct {
-	gorm.Model       // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	User       User  `gorm:"primaryKey"` // The user in the relationship.
-	Group      Group `gorm:"primaryKey"` // The group in the relationship.
+	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	User       uint `gorm:"primaryKey;not null;foreignKey:UserID"`  // The user in the relationship.
+	Group      uint `gorm:"primaryKey;not null;foreignKey:GroupID"` // The group in the relationship.
 }

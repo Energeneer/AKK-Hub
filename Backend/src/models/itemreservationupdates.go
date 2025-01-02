@@ -11,9 +11,9 @@ import (
 // ItemReservationUpdates represents the updates of inventory item types.
 type ItemReservationUpdate struct {
 	gorm.Model                 // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	ItemReservation int        `gorm:"not null"` // The key affected by the update.
-	Type            UpdateType `gorm:"not null"` // The type of the update.
-	Title           string     `gorm:"not null"` // The title of the update.
-	UpdatedBy       int        `gorm:"not null"` // The user who updated the inventory item type.
+	ItemReservation uint       `gorm:"not null;foreignKey:ItemReservationID"` // The item reservation that was updated (foreign key reference to ItemReservations.Id).
+	Type            UpdateType `gorm:"not null"`                              // The type of the update.
+	Title           string     `gorm:"not null"`                              // The title of the update.
+	UpdatedBy       uint       `gorm:"not null;foreignKey:UserID"`            // The user who updated the group (foreign key reference to Users.Id).
 	Text            *string    // The text of the update.
 }

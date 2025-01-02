@@ -11,9 +11,9 @@ import (
 // GroupUpdates represents the model to track the updates of Groups.
 type GroupUpdate struct {
 	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Group      int        `gorm:"not null"` // The Group affected by the update.
-	Type       UpdateType `gorm:"not null"` // The type of the update.
-	Title      string     `gorm:"not null"` // The title of the update.
-	UpdatedBy  int        `gorm:"not null"` // The user who updated the Group.
+	Group      uint       `gorm:"not null;foreignKey:GroupID"` // The group that was updated (foreign key reference to Groups.Id).
+	Type       UpdateType `gorm:"not null"`                    // The type of the update.
+	Title      string     `gorm:"not null"`                    // The title of the update.
+	UpdatedBy  uint       `gorm:"not null;foreignKey:UserID"`  // The user who updated the group (foreign key reference to Users.Id).
 	Text       *string    // The text of the update.
 }

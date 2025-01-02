@@ -11,6 +11,6 @@ import (
 // Emails definition of the Email model for the database.
 type Email struct {
 	gorm.Model        // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Address    string `gorm:"type:varchar(255); not null"` // The address of the email.
-	Label      string `gorm:"type:varchar(255); not null"` // The label of the email.
+	Address    string `gorm:"not null"` // The address of the email.
+	Label      string `gorm:"not null"` // The label of the email.
 }

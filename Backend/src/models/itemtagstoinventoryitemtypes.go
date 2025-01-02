@@ -10,7 +10,7 @@ import (
 
 // ItemTagsToInventoryItemTypes represents a many-to-many relationship between item tags and inventory item types.
 type ItemTagsToInventoryItemType struct {
-	gorm.Model                          // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	ItemTag           ItemTag           `gorm:"primaryKey"` // The item tag of the relationship.
-	InventoryItemType InventoryItemType `gorm:"primaryKey"` // The inventory item type of the relationship.
+	gorm.Model             // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	ItemTag           uint `gorm:"primaryKey; not null; foreignKey:ItemTagID"`           // The item tag of the relationship.
+	InventoryItemType uint `gorm:"primaryKey; not null; foreignKey:InventoryItemTypeID"` // The inventory item type of the relationship.
 }

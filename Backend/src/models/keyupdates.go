@@ -11,9 +11,9 @@ import (
 // KeyUpdates defines the structure for tracking updates to keys.
 type KeyUpdate struct {
 	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Key        int        `gorm:"not null"`     // The key affected by the update.
-	Type       UpdateType `gorm:"not null"`     // The type of the update.
-	Title      string     `gorm:"not null"`     // The title of the update.
-	UpdatedBy  int        `gorm:"not null"`     // The user who updated the key.
-	Text       *string    `gorm:"default:null"` // The text of the update.
+	Key        uint       `gorm:"not null;foreignKey:KeyID"`  // The key that was updated (foreign key reference to Keys.Id).
+	Type       UpdateType `gorm:"not null"`                   // The type of the update.
+	Title      string     `gorm:"not null"`                   // The title of the update.
+	UpdatedBy  uint       `gorm:"not null;foreignKey:UserID"` // The user who updated the group (foreign key reference to Users.Id).
+	Text       *string    `gorm:"default:null"`               // The text of the update.
 }

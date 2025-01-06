@@ -6,17 +6,17 @@ For further options see [SchemaCrawler.com](https://www.schemacrawler.com/diagra
 
 ```
 docker run `
-  --mount type=bind,source="$(pwd)",target=/home/schcrwlr `
+  --mount type=bind,source="$(pwd)",target=/home/schcrwlr/share `
   --rm -it `
   schemacrawler/schemacrawler `
   /opt/schemacrawler/bin/schemacrawler.sh `
   --server sqlite `
-  --database test.db `
+  --database share/test.db `
   --info-level standard `
   --command script `
   --script-language python `
   --script dbml.py `
-  --output-file share/output.dbml
+  --output-file share/database.dbml
 ```
 
 ## As Image
@@ -31,5 +31,5 @@ docker run `
   --database=test.db `
   --info-level=standard `
   --command=schema `
-  --output-file=output.png
+  --output-file=database.png
 ```

@@ -10,10 +10,12 @@ import (
 
 // RoomUpdates defines the RoomUpdate model for the database.
 type RoomUpdate struct {
-	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Room       uint       `gorm:"not null;foreignKey:RoomID"` // The room that was updated (foreign key reference to Rooms.Id).
-	Type       UpdateType `gorm:"not null"`                   // The type of the update.
-	Title      string     `gorm:"not null"`                   // The title of the update.
-	UpdatedBy  uint       `gorm:"not null;foreignKey:UserID"` // The user who updated the group (foreign key reference to Users.Id).
-	Text       *string    // The text of the update.
+	gorm.Model             // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	Room        Room       // Referenced Room Object
+	RoomID      uint       `gorm:"not null"` // The room that was updated (foreign key reference to Rooms.Id).
+	Type        UpdateType `gorm:"not null"` // The type of the update.
+	Title       string     `gorm:"not null"` // The title of the update.
+	UpdatedBy   User       // Referenced User Object
+	UpdatedByID uint       `gorm:"not null"` // The user who updated the group (foreign key reference to Users.Id).
+	Text        *string    // The text of the update.
 }

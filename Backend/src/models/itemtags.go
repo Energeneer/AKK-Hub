@@ -10,8 +10,9 @@ import (
 
 // ItemTags represents tags of inventory items.
 type ItemTag struct {
-	gorm.Model          // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Name        string  `gorm:"not null"` // The name of the tag.
-	TagGroup    *int    // The tag group the tag is associated with.
-	Description *string // The description of the tag.
+	gorm.Model                // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	Name        string        `gorm:"not null"` // The name of the tag.
+	TagGroup    *ItemTagGroup // Referenced ItemTagGroup Object
+	TagGroupID  *uint         // The tag group the tag is associated with.
+	Description *string       // The description of the tag.
 }

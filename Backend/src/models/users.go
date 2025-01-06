@@ -27,6 +27,6 @@ type User struct {
 	PublicImagePath   *string    // The path to the public image of the user.
 	InternalImagePath *string    // The path to the internal image of the user.
 	Description       *string    // The description of the user the user can set.
-	IsBlocked         bool       // The blocked status of the user.
+	IsBlocked         bool       `gorm:"default:false"` // The blocked status of the user.
 	InternalRemark    *string    // The internal remark of the user.
 }

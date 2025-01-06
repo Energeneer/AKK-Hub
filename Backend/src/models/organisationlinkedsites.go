@@ -10,7 +10,9 @@ import (
 
 // OrganisationLinkedSites is a model to connect Organisations and linked sites.
 type OrganisationLinkedSite struct {
-	gorm.Model       // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Organisation int `gorm:"primaryKey"` // The unique identifier of the Organisation.
-	Site         int `gorm:"primaryKey"` // The unique identifier of the linked site.
+	gorm.Model                  // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	Organisation   Organisation // Referenced Organisation Object
+	OrganisationID uint         `gorm:"primaryKey"` // The unique identifier of the Organisation.
+	Site           LinkedSite   // Referenced LinkedSite Object
+	SiteID         uint         `gorm:"primaryKey"` // The unique identifier of the linked site.
 }

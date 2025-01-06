@@ -11,8 +11,10 @@ import (
 // RoomInfluences is a model for the database.
 type RoomInfluence struct {
 	gorm.Model             // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	OccupiedRoom      int  `gorm:"not null"`               // The room that is occupied.
-	AffectedRoom      int  `gorm:"not null"`               // The room that is affected by the occupation.
+	OccupiedRoom      Room // Referenced Room Object
+	OccupiedRoomID    uint `gorm:"not null"` // The room that is occupied.
+	AffectedRoom      Room // Referenced Room Object
+	AffectedRoomID    uint `gorm:"not null"`               // The room that is affected by the occupation.
 	AffectsAccess     bool `gorm:"not null;default:false"` // Whether the occupation affects access to the room.
 	AffectsSound      bool `gorm:"not null;default:false"` // Whether the occupation affects sound in the room.
 	AffectsSmell      bool `gorm:"not null;default:false"` // Whether the occupation affects smell in the room.

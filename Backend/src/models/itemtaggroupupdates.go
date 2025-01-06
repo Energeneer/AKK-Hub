@@ -10,10 +10,12 @@ import (
 
 // ItemTagGroupUpdates represents updates to item_tag_groups.
 type ItemTagGroupUpdate struct {
-	gorm.Model              // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	ItemTagGroup uint       `gorm:"not null;foreignKey:ItemTagGroupID"` // The item tag group that was updated (foreign key reference to ItemTagGroups.Id).
-	Type         UpdateType `gorm:"not null"`                           // The type of the update.
-	Title        string     `gorm:"not null"`                           // The title of the update.
-	UpdatedBy    uint       `gorm:"not null;foreignKey:UserID"`         // The user who updated the group (foreign key reference to Users.Id).
-	Text         *string    // The text of the update.
+	gorm.Model                  // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	ItemTagGroup   ItemTagGroup // Referenced ItemTagGroup Object
+	ItemTagGroupID uint         `gorm:"not null"` // The item tag group that was updated (foreign key reference to ItemTagGroups.Id).
+	Type           UpdateType   `gorm:"not null"` // The type of the update.
+	Title          string       `gorm:"not null"` // The title of the update.
+	UpdatedBy      User         // Referenced User Object
+	UpdatedByID    uint         `gorm:"not null;foreignKey:UserID"` // The user who updated the group (foreign key reference to Users.Id).
+	Text           *string      // The text of the update.
 }

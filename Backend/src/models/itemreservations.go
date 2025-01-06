@@ -31,14 +31,19 @@ const (
 
 // ItemReservations represents the item reservations model.
 type ItemReservation struct {
-	gorm.Model                             // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	TimeFrame        int                   `gorm:"not null"` // The time frame of the reservation.
-	ItemType         int                   `gorm:"not null"` // The type of the item to reserve.
-	Unit             ItemReservationUnits  `gorm:"not null"` // The unit of the reservation.
-	AmountHandedOut  int                   // The amount of the item that has been handed out.
-	HandedOutBy      *int                  // The user who handed out the item.
-	AmountReturned   *int                  `gorm:"default:0"` // The amount of the item that has been returned.
-	ReturnAcceptedBy *int                  // The user who accepted the return of the item.
-	CreatedBy        int                   `gorm:"not null"` // The user who created the reservation.
-	Status           ItemReservationStatus `gorm:"not null"` // The status of the reservation.
+	gorm.Model                               // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	TimeFrame          TimeFrame             // Referenced TimeFrame Object
+	TimeFrameID        uint                  `gorm:"not null"` // The time frame of the reservation.
+	ItemType           InventoryItemType     // Referenced InventoryItemType Object
+	ItemTypeID         uint                  `gorm:"not null"` // The type of the item to reserve.
+	Unit               ItemReservationUnits  `gorm:"not null"` // The unit of the reservation.
+	AmountHandedOut    int                   // The amount of the item that has been handed out.
+	HandedOutBy        *User                 // Referenced User Object
+	HandedOutByID      *uint                 // The user who handed out the item.
+	AmountReturned     *uint                 `gorm:"default:0"` // The amount of the item that has been returned.
+	ReturnAcceptedBy   *User                 // Referenced User Object
+	ReturnAcceptedByID *uint                 // The user who accepted the return of the item.
+	CreatedBy          User                  // Referenced User Object
+	CreatedByID        uint                  `gorm:"not null"` // The user who created the reservation.
+	Status             ItemReservationStatus `gorm:"not null"` // The status of the reservation.
 }

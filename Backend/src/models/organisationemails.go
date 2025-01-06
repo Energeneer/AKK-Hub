@@ -4,16 +4,16 @@
 // Author: Valentin Haas, 2025
 package models
 
-import (
-	"gorm.io/gorm"
-)
+import "time"
 
 // OrganisationEmails is a model to connect organisations and emails.
 type OrganisationEmail struct {
-	gorm.Model                  // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 	Organisation   Organisation // Referenced Organisation Object
 	OrganisationID uint         `gorm:"primaryKey"` // The unique identifier of the organisation.
 	Email          Email        // Referenced Email Object
-	EmailID        uint         `gorm:"primaryKey"`             // The unique identifier of the email.
+	EmailID        uint         `gorm:"primaryKey"` // The unique identifier of the email.
+	CreatedAt      time.Time    // Time the model was created. Auto Populated by Gorm.
+	UpdatedAt      time.Time    // Time the model was updated. Auto Populated by Gorm.
+	DeletedAt      time.Time    // Time the model was deleted. Auto Populated by Gorm.
 	IsPrimary      bool         `gorm:"not null;default:false"` // Whether the email is the primary email of the organisation.
 }

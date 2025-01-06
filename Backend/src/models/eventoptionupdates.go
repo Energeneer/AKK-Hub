@@ -10,10 +10,12 @@ import (
 
 // EventOptionUpdatesModel to track the updates of EventOptions.
 type EventOptionUpdate struct {
-	gorm.Model             // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	EventOption uint       `gorm:"not null;foreignKey:EventOptionID"` // The EventOption that was updated (foreign key reference to EventOptions.Id).
-	Type        UpdateType `gorm:"type:varchar(255);not null"`        // The type of the update.
-	Title       string     `gorm:"type:varchar(255);not null"`        // The title of the update.
-	UpdatedBy   uint       `gorm:"not null;foreignKey:UserID"`        // The user who updated the EventOption (foreign key reference to Users.Id).
-	Text        *string    `gorm:"type:text;default:null"`            // The text of the update.
+	gorm.Model    // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	EventOption   EventOption
+	EventOptionID uint       `gorm:"not null"` // The EventOption that was updated (foreign key reference to EventOptions.Id).
+	Type          UpdateType `gorm:"not null"` // The type of the update.
+	Title         string     `gorm:"not null"` // The title of the update.
+	UpdatedBy     User       // Referenced User Object
+	UpdatedByID   uint       `gorm:"not null"`               // The user who updated the EventOption (foreign key reference to Users.Id).
+	Text          *string    `gorm:"type:text;default:null"` // The text of the update.
 }

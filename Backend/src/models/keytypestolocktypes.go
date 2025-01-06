@@ -6,6 +6,8 @@ package models
 
 // KeyTypesToLockTypes defines the structure for the relationship between key types and lock types.
 type KeyTypesToLockTypes struct {
-	KeyTypeID  uint `gorm:"primaryKey"` // The key type in the relationship.
-	LockTypeID uint `gorm:"primaryKey"` // The lock type in the relationship.
+	KeyType    KeyType  // Referenced KeyType Object
+	KeyTypeID  uint     `gorm:"primaryKey"` // The key type in the relationship.
+	LockType   LockType // Referenced LockType Object
+	LockTypeID uint     `gorm:"primaryKey"` // The lock type in the relationship.
 }

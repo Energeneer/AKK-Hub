@@ -10,8 +10,10 @@ import (
 
 // InventoryItemTypeLocations represents the model to track the locations of inventory items.
 type InventoryItemTypeLocation struct {
-	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	InventoryItemType int `gorm:"not null"` // The key of the inventory item type.
-	Location          int `gorm:"not null"` // The key of the location.
-	Count             int `gorm:"not null"` // The count of the inventory item type at the location.
+	gorm.Model                            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	InventoryItemType   InventoryItemType // References InventoryItemType Object
+	InventoryItemTypeID uint              `gorm:"not null"` // The key of the inventory item type.
+	Location            RoomLocation      // Referenced RoomLocation Object
+	LocationID          uint              `gorm:"not null"` // The key of the location.
+	Count               int               `gorm:"not null"` // The count of the inventory item type at the location.
 }

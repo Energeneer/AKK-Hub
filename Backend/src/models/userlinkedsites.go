@@ -10,7 +10,9 @@ import (
 
 // UserLinkedSite defines the relationship between users and linked sites.
 type UserLinkedSite struct {
-	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	User       uint `gorm:"primaryKey;not null;foreignKey:UserID"` // The user in the relationship (foreign key reference to User.ID).
-	Site       uint `gorm:"primaryKey;not null;foreignKey:SiteID"` // The linked site in the relationship (foreign key reference to LinkedSite.ID).
+	gorm.Model            // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	User       User       // Referenced User Object
+	UserID     uint       `gorm:"primaryKey"` // The user in the relationship (foreign key reference to User.ID).
+	Site       LinkedSite // Referenced LinkedSite Object
+	SiteID     uint       `gorm:"primaryKey"` // The linked site in the relationship (foreign key reference to LinkedSite.ID).
 }

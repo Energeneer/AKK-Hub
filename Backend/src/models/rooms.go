@@ -11,7 +11,8 @@ import (
 // Rooms defines the Room model for the database.
 type Room struct {
 	gorm.Model           // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Building    int      `gorm:"not null"` // The building reference of the room.
+	Building    Building // Referenced Building Object
+	BuildingID  uint     `gorm:"not null"` // The building reference of the room.
 	Name        string   `gorm:"not null"` // The name of the room.
 	Description *string  // The description of the room.
 	RoomNumber  *string  // The room number of the room.

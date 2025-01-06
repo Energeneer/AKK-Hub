@@ -10,10 +10,12 @@ import (
 
 // KeyRing represents the key rings in the system.
 type KeyRing struct {
-	gorm.Model              // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Label           string  `gorm:"not null"`  // The label of the key ring.
-	Description     *string `gorm:"type:text"` // The description of the key ring, optional.
-	ImagePath       *string // The path to the image of the key ring, optional.
-	DefaultLocation uint    `gorm:"not null"` // The default location of the key ring.
-	CurrentLocation uint    `gorm:"not null"` // The current location of the key ring.
+	gorm.Model                     // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	Label             string       `gorm:"not null"`  // The label of the key ring.
+	Description       *string      `gorm:"type:text"` // The description of the key ring, optional.
+	ImagePath         *string      // The path to the image of the key ring, optional.
+	DefaultLocation   RoomLocation // Referenced RoomLocation Object
+	DefaultLocationID uint         `gorm:"not null"` // The default location of the key ring.
+	CurrentLocation   RoomLocation // Referenced RoomLocation Object
+	CurrentLocationID uint         `gorm:"not null"` // The current location of the key ring.
 }

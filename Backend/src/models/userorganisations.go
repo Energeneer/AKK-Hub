@@ -10,7 +10,9 @@ import (
 
 // UserOrganisation defines the relationship between users and organisations.
 type UserOrganisation struct {
-	gorm.Model        // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	User         uint `gorm:"primaryKey;not null;foreignKey:UserID"`         // The user in the relationship (foreign key reference to User.ID).
-	Organisation uint `gorm:"primaryKey;not null;foreignKey:OrganisationID"` // The organisation in the relationship (foreign key reference to Organisation.ID).
+	gorm.Model                  // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	User           User         // Referenced User Object
+	UserID         uint         `gorm:"primaryKey"` // The user in the relationship (foreign key reference to User.ID).
+	Organisation   Organisation // Referenced Organisation Object
+	OrganisationID uint         `gorm:"primaryKey"` // The organisation in the relationship (foreign key reference to Organisation.ID).
 }

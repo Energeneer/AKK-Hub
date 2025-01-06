@@ -12,6 +12,8 @@ import (
 // KeysToLocks defines the relationship model between keys and locks.
 type KeysToLocks struct {
 	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
+	Key        Key  // Referenced Key Object
 	KeyID      uint `gorm:"primaryKey"` // The key in the relationship.
+	Lock       Lock // Referenced Lock Object
 	LockID     uint `gorm:"primaryKey"` // The lock in the relationship.
 }

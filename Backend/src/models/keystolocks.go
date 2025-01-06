@@ -5,15 +5,15 @@
 // Author: Valentin Haas, 2025
 package models
 
-import (
-	"gorm.io/gorm"
-)
+import "time"
 
 // KeysToLocks defines the relationship model between keys and locks.
 type KeysToLocks struct {
-	gorm.Model      // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
-	Key        Key  // Referenced Key Object
-	KeyID      uint `gorm:"primaryKey"` // The key in the relationship.
-	Lock       Lock // Referenced Lock Object
-	LockID     uint `gorm:"primaryKey"` // The lock in the relationship.
+	Key       Key       // Referenced Key Object
+	KeyID     uint      `gorm:"primaryKey"` // The key in the relationship.
+	Lock      Lock      // Referenced Lock Object
+	LockID    uint      `gorm:"primaryKey"` // The lock in the relationship.
+	CreatedAt time.Time // Time the model was created. Auto Populated by Gorm.
+	UpdatedAt time.Time // Time the model was updated. Auto Populated by Gorm.
+	DeletedAt time.Time // Time the model was deleted. Auto Populated by Gorm.
 }

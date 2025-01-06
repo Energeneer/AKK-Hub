@@ -4,16 +4,16 @@
 // Author: Valentin Haas, 2025
 package models
 
-import (
-	"gorm.io/gorm"
-)
+import "time"
 
 // OrganisationAddresses is a model to connect Organisations and Addresses.
 type OrganisationAddresse struct {
-	gorm.Model                  // Provides ID, CreatedAt, UpdatedAt, DeletedAt fields
 	Organisation   Organisation // Referenced Organisation Object
 	OrganisationID uint         `gorm:"primaryKey"` // Th unique identifier of the organisation.
 	Address        Address      // Referenced Address Object
-	AddressID      uint         `gorm:"primaryKey"`            // The unique identifier of the address.
+	AddressID      uint         `gorm:"primaryKey"` // The unique identifier of the address.
+	CreatedAt      time.Time    // Time the model was created. Auto Populated by Gorm.
+	UpdatedAt      time.Time    // Time the model was updated. Auto Populated by Gorm.
+	DeletedAt      time.Time    // Time the model was deleted. Auto Populated by Gorm.
 	IsPrimary      bool         `gorm:"not null;default:true"` // Indicates whether the address is the primary address for the organisation.
 }
